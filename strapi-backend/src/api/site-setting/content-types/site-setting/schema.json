@@ -1,0 +1,60 @@
+{
+  "kind": "singleType",
+  "collectionName": "site_settings",
+  "info": {
+    "singularName": "site-setting",
+    "pluralName": "site-settings",
+    "displayName": "Site Settings",
+    "description": "Global site configuration"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "siteName": {
+      "type": "string",
+      "required": true,
+      "default": "Austin Sites"
+    },
+    "siteTitle": {
+      "type": "string",
+      "required": true
+    },
+    "siteDescription": {
+      "type": "text"
+    },
+    "siteUrl": {
+      "type": "string"
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "favicon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "socialImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "enableThemeSwitcher": {
+      "type": "boolean",
+      "default": true
+    },
+    "footerText": {
+      "type": "text"
+    },
+    "copyrightText": {
+      "type": "string"
+    }
+  }
+}
+

@@ -1,71 +1,144 @@
-<p align="center">
-  <img src="assets/gh-banner.png" alt="Odyssey Theme Banner">
-</p>
+# Austin Sites
 
-<br/>
-<div align="center">
-  <a href="https://twitter.com/jaydanurwin">
-  <img src="assets/twitter-badge.svg" alt="Follow Jaydan Urwin on Twitter"/>
-</a>
-  <a href="https://sapling.lemonsqueezy.com/checkout/buy/9b78751f-6382-442d-ac99-32c2318b70a0">
-    <img src="assets/sponsor-badge.svg" alt="Sponsor This Repo" />
-  </a>
-</div>
-<br/>
+A modern content management system built with **Strapi** (backend CMS) and **Next.js** (frontend).
 
-# Odyssey Theme
+## Project Structure
 
-Odyssey Theme is a modern theme/starter for a business or startup's marketing website. It provides landing page examples, a full-featured blog, contact forms, and more. It is fully themeable to match your business' branding and style. It even includes a theme switcher component to show how easily the entire style of the site can be changed with only a few lines of CSS.
-
-## Features
-
-<p align="center">
-  <img src="assets/lh-screenshot.png" alt="Screenshot of perfect score in Lighthouse benchmark">
-</p>
-
-
-- ✅ **A perfect score in Lighthouse**
-- ✅ **Blazing fast performance thanks to Astro 🚀**
-- ✅ **A Full Featured Blog with Tagging**
-- ✅ **Fully theme-able styles with for buttons, shapes, backgrounds, surfaces, etc.**
-- ✅ **Responsive, mobile-friendly landing pages**
-- ✅ **SEO Best Practices (Open Graph, Canonical URLs, sitemap)**
-- ✅ **Performant Local Fonts Setup**
-- ✅ **Contact Forms Setup for Netlify, Formspree, Formspark, etc.**
-- ✅ **A package of ready-to-use UI components**
-
-
-## Demo
-
-View a [live demo](https://odyssey-theme.sapling.supply/) of the Odyssey Theme.
-
-## Documentation
-
-1. View the [Theme Setup Guide](https://odyssey-theme.sapling.supply/theme/theme-setup)
-2. View the [Customizing the Theme Guide](https://odyssey-theme.sapling.supply/theme/customizing-odyssey)
-
-## Usage
-
-```bash
-cd theme
-
-npm install
-
-npm start
+```
+austin-sites/
+├── strapi-backend/     # Strapi CMS backend
+├── frontend/           # Next.js frontend
+└── austin-sites/       # Original Astro site (reference)
 ```
 
-## Deploy
+## Quick Start
 
-Feel free to deploy and host your site on your favorite static hosting service such as Netlify, Firebase Hosting, Vercel, GitHub Pages, etc.
+### 1. Start Strapi Backend
 
-Astro has [an in-depth guide](https://docs.astro.build/en/guides/deploy/) on how to deploy an Astro project to each service.
+```bash
+cd strapi-backend
 
-## Sponsor
+# Install dependencies (if not already done)
+npm install
 
-If you find this theme useful, please consider donating to support the continued development of it with the link below
+# Start Strapi in development mode
+npm run develop
+```
 
-[Donate to Odyssey Theme](https://sapling.lemonsqueezy.com/checkout/buy/9b78751f-6382-442d-ac99-32c2318b70a0)
+Strapi will start at **http://localhost:1337**
 
-## Support
+On first run, you'll be prompted to create an admin account at **http://localhost:1337/admin**
 
-Please feel free to post issues or submit PRs to this repo and we will do our best to respond in a timely manner, keeping in mind this template is offered for free as is on GitHub.
+### 2. Configure Strapi Permissions
+
+After creating your admin account:
+
+1. Go to **Settings** → **Users & Permissions Plugin** → **Roles** → **Public**
+2. Enable the following permissions:
+   - **Blog-post**: `find`, `findOne`
+   - **Page**: `find`, `findOne`
+   - **Site-setting**: `find`
+   - **Navigation-item**: `find`
+3. Click **Save**
+
+### 3. Add Content in Strapi
+
+1. **Site Settings** (Single Type): Configure your site name, title, description
+2. **Navigation Items**: Add menu items (Home, Blog, About, Contact)
+3. **Pages**: Create About and Contact pages
+4. **Blog Posts**: Add your blog content
+
+### 4. Start Next.js Frontend
+
+```bash
+cd frontend
+
+# Create environment file
+cp .env.example .env.local
+# Edit .env.local if needed (default is http://localhost:1337)
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+
+Frontend will be available at **http://localhost:3000**
+
+## Content Types
+
+### Blog Post
+- Title, Slug, Description
+- Content (Rich Text)
+- Featured Image
+- Publish Date
+- Tags (JSON array)
+- Author
+
+### Page
+- Title, Slug
+- Page Type (about, contact, legal, landing, custom)
+- Hero Title, Description, Image
+- Content (Rich Text)
+- SEO Title, Description
+
+### Site Settings (Single Type)
+- Site Name, Title, Description
+- Logo, Favicon, Social Image
+- Enable Theme Switcher
+- Footer Text, Copyright Text
+
+### Navigation Item
+- Title, Slug
+- Order
+- Is External, Open in New Tab
+
+## Development
+
+### Strapi Commands
+
+```bash
+cd strapi-backend
+npm run develop    # Start with hot-reload
+npm run start      # Start production server
+npm run build      # Build admin panel
+```
+
+### Next.js Commands
+
+```bash
+cd frontend
+npm run dev        # Start development server
+npm run build      # Build for production
+npm run start      # Start production server
+npm run lint       # Run ESLint
+```
+
+## Environment Variables
+
+### Frontend (.env.local)
+
+```env
+NEXT_PUBLIC_STRAPI_URL=http://localhost:1337
+STRAPI_API_TOKEN=your_optional_api_token
+```
+
+## Deployment
+
+### Strapi
+- Can be deployed to Heroku, DigitalOcean, Railway, or any Node.js hosting
+- For production, switch from SQLite to PostgreSQL/MySQL
+
+### Next.js
+- Deploy to Vercel, Netlify, or any Node.js hosting
+- Update `NEXT_PUBLIC_STRAPI_URL` to your production Strapi URL
+
+## Tech Stack
+
+- **Backend**: Strapi 5
+- **Frontend**: Next.js 15 with App Router
+- **Styling**: Tailwind CSS
+- **Language**: TypeScript
+- **Database**: SQLite (development) / PostgreSQL (production recommended)
+
