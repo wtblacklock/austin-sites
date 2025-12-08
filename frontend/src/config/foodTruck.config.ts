@@ -24,11 +24,11 @@ export const foodTruck = {
   hours: [
     { label: "Monday", value: "7:00 am – 2:00 pm" },
     { label: "Tuesday", value: "7:00 am – 2:00 pm" },
-    { label: "Wednesday", value: "Closed or limited hours – check Instagram" },
-    { label: "Thursday", value: "Closed or limited hours – check Instagram" },
-    { label: "Friday", value: "Closed or limited hours – check Instagram" },
-    { label: "Saturday", value: "Breakfast and pop ups – check Instagram" },
-    { label: "Sunday", value: "Breakfast and pop ups – check Instagram" },
+    { label: "Wednesday", value: "7:00 am – 2:00 pm" },
+    { label: "Thursday", value: "7:00 am – 2:00 pm" },
+    { label: "Friday", value: "7:00 am – 2:00 pm" },
+    { label: "Saturday", value: "7:00 am – 2:00 pm" },
+    { label: "Sunday", value: "7:00 am – 2:00 pm" },
   ],
 
   // Hero section

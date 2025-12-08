@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export function FixedBottomCta() {
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 p-4 lg:hidden">
+    <div className="fixed bottom-0 left-0 right-0 z-50 lg:hidden">
       <Link
         href="https://www.doordash.com"
         target="_blank"

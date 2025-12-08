@@ -22,10 +22,10 @@ export function HeroTruck() {
       <div className="relative z-10 container-grid">
         <div className="max-w-4xl">
           {/* Big chunky title with red background - scaled for mobile */}
-          <h1 className="font-chunky text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-white mb-6 sm:mb-10 inline-block">
-            <span className="bg-[#FF000D] px-3 sm:px-4 py-1 sm:py-2 inline-block">Always Fresh.</span>
+          <h1 className="font-chunky text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-white mb-6 sm:mb-10">
+            <span className="bg-[#FF000D] px-3 sm:px-4 py-1 sm:py-2 box-decoration-clone leading-relaxed">Always Fresh.</span>
             <br />
-            <span className="bg-[#FF000D] px-3 sm:px-4 py-1 sm:py-2 inline-block mt-1 sm:mt-2">Always Bella.</span>
+            <span className="bg-[#FF000D] px-3 sm:px-4 py-1 sm:py-2 box-decoration-clone leading-relaxed mt-2 inline-block">Always Bella.</span>
           </h1>
 
           {/* CTA Buttons */}
