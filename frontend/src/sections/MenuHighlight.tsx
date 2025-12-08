@@ -32,8 +32,8 @@ export function MenuHighlight() {
                   className="object-cover"
                 />
               </div>
-              {/* Text with red background box like hero - 25px more from bottom */}
-              <div className="absolute left-0 p-4" style={{ bottom: '25px' }}>
+              {/* Text with red background box like hero - responsive bottom margin */}
+              <div className="absolute left-0 p-4 bottom-[15px] md:bottom-[25px]">
                 <h3 className="font-chunky text-2xl md:text-3xl text-white inline-block">
                   <span className="bg-[#FF000D] px-3 py-1">{item.label}</span>
                 </h3>

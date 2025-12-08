@@ -47,19 +47,19 @@ export function NavMinimal() {
               href={link.href}
               target={link.external ? "_blank" : undefined}
               rel={link.external ? "noopener noreferrer" : undefined}
-              className="text-sm font-semibold uppercase tracking-wide text-white/80 hover:text-white transition-colors flex items-center gap-1"
+              className="text-sm font-semibold uppercase tracking-wide text-white hover:text-white/80 transition-colors flex items-center gap-1"
             >
               {link.label}
               {link.external && <span className="text-xs">↗</span>}
             </Link>
           ))}
           
-          {/* Order Ahead Button - Yellow */}
+          {/* Order Ahead Button - Yellow, hidden on tablet/mobile (only shows on lg+) */}
           <Link
             href="https://www.doordash.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-[#FFDD00] text-[#FF000D] px-6 py-2 text-sm font-bold uppercase tracking-wide hover:bg-[#FFE433] transition-colors"
+            className="hidden lg:block bg-[#FFDD00] text-[#FF000D] px-6 py-2 text-sm font-bold uppercase tracking-wide hover:bg-[#FFE433] transition-colors"
           >
             Order Ahead
           </Link>

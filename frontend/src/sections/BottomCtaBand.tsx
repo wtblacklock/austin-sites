@@ -55,7 +55,7 @@ export function BottomCtaBand() {
           </h2>
 
           {/* Tagline */}
-          <p className="text-xl text-white/80 mb-10 max-w-lg leading-relaxed">
+          <p className="text-xl text-white mb-10 max-w-lg leading-relaxed">
             {foodTruck.tagline}
           </p>
 
@@ -70,7 +70,7 @@ export function BottomCtaBand() {
           </Link>
 
           {/* Address line - linked to map */}
-          <div className="border-t border-white/20 pt-8 mt-8 space-y-2 text-white/70">
+          <div className="border-t border-white/20 pt-8 mt-8 space-y-2 text-white">
             <Link
               href={primaryLocation.mapUrl}
               target="_blank"

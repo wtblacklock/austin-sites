@@ -21,18 +21,18 @@ export function HeroTruck() {
       {/* Content - Left aligned */}
       <div className="relative z-10 container-grid">
         <div className="max-w-4xl">
-          {/* Big chunky title with red background */}
-          <h1 className="font-chunky text-6xl sm:text-7xl md:text-8xl lg:text-9xl text-white mb-10 inline-block">
-            <span className="bg-[#FF000D] px-4 py-2 inline-block">Always Fresh.</span>
+          {/* Big chunky title with red background - scaled for mobile */}
+          <h1 className="font-chunky text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl text-white mb-6 sm:mb-10 inline-block">
+            <span className="bg-[#FF000D] px-3 sm:px-4 py-1 sm:py-2 inline-block">Always Fresh.</span>
             <br />
-            <span className="bg-[#FF000D] px-4 py-2 inline-block mt-2">Always Bella.</span>
+            <span className="bg-[#FF000D] px-3 sm:px-4 py-1 sm:py-2 inline-block mt-1 sm:mt-2">Always Bella.</span>
           </h1>
 
           {/* CTA Buttons */}
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-wrap gap-3 sm:gap-4">
             <Link
               href={hero.primaryCtaHref}
-              className="inline-block bg-[#FF000D] text-white px-10 py-5 text-lg font-bold uppercase tracking-wide hover:bg-[#cc000a] transition-colors shadow-xl"
+              className="inline-block bg-[#FF000D] text-white px-6 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-bold uppercase tracking-wide hover:bg-[#cc000a] transition-colors shadow-xl"
             >
               {hero.primaryCtaLabel}
             </Link>
@@ -40,7 +40,7 @@ export function HeroTruck() {
               href="https://www.doordash.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block bg-[#FFDD00] text-[#FF000D] px-10 py-5 text-lg font-bold uppercase tracking-wide hover:bg-[#FFE433] transition-colors shadow-xl"
+              className="hidden lg:inline-block bg-[#FFDD00] text-[#FF000D] px-6 sm:px-10 py-4 sm:py-5 text-base sm:text-lg font-bold uppercase tracking-wide hover:bg-[#FFE433] transition-colors shadow-xl"
             >
               Order Ahead
             </Link>
