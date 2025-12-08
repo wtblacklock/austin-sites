@@ -1,65 +1,59 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-/* daisyUI Theme Configuration */
+/* Vibrant red theme */
 @plugin "daisyui" {
-  themes: light, dark, corporate, business, emerald, forest, luxury, dracula, autumn, nord;
+  themes: false;
 }
 
-/* Smooth scrolling */
+:root {
+  --font-oswald: "Oswald", sans-serif;
+  
+  /* Bright red #FF000D */
+  --color-red: #FF000D;
+  --color-red-dark: #cc000a;
+  --color-red-darker: #990008;
+  
+  /* Cream/white for contrast */
+  --color-cream: #faf8f5;
+  --color-white: #ffffff;
+  
+  /* Dark for contrast elements */
+  --color-dark: #1a1a1a;
+}
+
 html {
   scroll-behavior: smooth;
 }
 
-/* Rich text content styling using daisyUI prose */
-.prose-content {
-  max-width: 65ch;
+body {
+  font-family: var(--font-oswald);
+  background-color: #FF000D;
+  color: #ffffff;
 }
 
-.prose-content h1 {
-  @apply text-4xl font-bold mb-4 text-base-content;
+/* Oswald chunky heading style with 3% letter-spacing */
+.font-chunky {
+  font-family: var(--font-oswald);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
 }
 
-.prose-content h2 {
-  @apply text-3xl font-semibold mt-8 mb-4 text-base-content;
+/* Utility classes */
+.text-body {
+  @apply text-lg leading-relaxed;
 }
 
-.prose-content h3 {
-  @apply text-2xl font-semibold mt-6 mb-3 text-base-content;
+.text-body-lg {
+  @apply text-xl leading-relaxed;
 }
 
-.prose-content p {
-  @apply mb-5 leading-relaxed text-base-content/80;
+.section-padding {
+  @apply py-20 px-6 md:py-28 lg:py-36;
 }
 
-.prose-content a {
-  @apply link link-primary;
-}
-
-.prose-content blockquote {
-  @apply border-l-4 border-primary pl-6 my-6 italic text-base-content/70;
-}
-
-.prose-content ul, .prose-content ol {
-  @apply mb-5 pl-6 list-disc;
-}
-
-.prose-content li {
-  @apply mb-2 leading-relaxed;
-}
-
-.prose-content img {
-  @apply rounded-xl my-8;
-}
-
-.prose-content code {
-  @apply bg-base-200 px-2 py-1 rounded text-sm;
-}
-
-.prose-content pre {
-  @apply bg-base-300 text-base-content p-6 rounded-xl overflow-x-auto my-6;
-}
-
-.prose-content pre code {
-  @apply bg-transparent p-0;
+/* Container with consistent max-width for grid alignment */
+.container-grid {
+  @apply container mx-auto max-w-6xl px-6;
 }

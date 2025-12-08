@@ -1,96 +1,56 @@
-import Image from 'next/image';
+import { foodTruck } from "@/config/foodTruck.config";
+import Link from "next/link";
 
-interface Testimonial {
-  quote: string;
-  author?: string;
-  avatar?: string;
-}
+export function TestimonialsStrip() {
+  const { testimonials } = foodTruck;
 
-interface TestimonialsStripProps {
-  title?: string;
-  testimonials: Testimonial[];
-}
-
-// Placeholder avatar URLs from UI Avatars or random Unsplash portraits
-const placeholderAvatars = [
-  'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face',
-  'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=face',
-  'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop&crop=face',
-  'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop&crop=face',
-  'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face',
-  'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=100&h=100&fit=crop&crop=face',
-];
-
-export default function TestimonialsStrip({
-  title,
-  testimonials,
-}: TestimonialsStripProps) {
   return (
-    <section className="py-16 px-4 bg-base-200">
-      <div className="container mx-auto max-w-6xl">
-        {/* Section heading */}
-        {title && (
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">{title}</h2>
-            <div className="flex justify-center gap-1 text-warning text-2xl">
-              ★★★★★
-            </div>
-          </div>
-        )}
-
-        {/* Testimonials grid - horizontal scroll on mobile, grid on larger screens */}
-        <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory lg:grid lg:grid-cols-3 lg:overflow-visible lg:pb-0">
-          {testimonials.map((testimonial, index) => (
-            <div
-              key={index}
-              className="card bg-base-100 shadow-xl min-w-[280px] sm:min-w-[320px] lg:min-w-0 snap-center"
+    <section className="py-20 bg-[#faf8f5] overflow-hidden">
+      <div className="container-grid">
+        {/* Header - Left aligned */}
+        <div className="mb-12">
+          <h2 className="font-chunky text-4xl md:text-5xl text-[#FF000D] mb-2">
+            What People Say
+          </h2>
+          <p className="text-[#1a1a1a]/60 text-sm uppercase tracking-widest">
+            4.6 stars on{" "}
+            <Link 
+              href="https://www.yelp.com/biz/taco-bellas-austin" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="underline hover:text-[#FF000D]"
             >
-              <div className="card-body">
-                {/* Quote icon */}
-                <div className="text-primary text-4xl opacity-30 mb-2">"</div>
-                
-                {/* Quote text */}
-                <p className="text-lg leading-relaxed mb-4">
-                  {testimonial.quote}
-                </p>
-                
-                {/* Author */}
-                <div className="flex items-center gap-3 mt-auto pt-4 border-t border-base-200">
-                  <div className="avatar">
-                    <div className="w-12 h-12 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-                      <Image
-                        src={testimonial.avatar || placeholderAvatars[index % placeholderAvatars.length]}
-                        alt={testimonial.author || 'Customer'}
-                        width={48}
-                        height={48}
-                        className="rounded-full object-cover"
-                      />
-                    </div>
-                  </div>
-                  <div>
-                    <p className="font-semibold text-sm">{testimonial.author || 'Happy Customer'}</p>
-                    <p className="text-xs opacity-60">Local regular</p>
-                  </div>
-                </div>
-                
-                {/* Star rating */}
-                <div className="flex gap-0.5 text-warning text-sm mt-2">
-                  ★★★★★
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="text-center mt-10">
-          <p className="opacity-70 mb-4">
-            Join our community of taco lovers
+              Yelp
+            </Link>
+            {" "}· 73+ reviews
           </p>
-          <a href="#location" className="btn btn-primary">
-            Visit Us Today
-          </a>
         </div>
+      </div>
+
+      {/* Horizontal scrolling testimonials */}
+      <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-6 px-6 md:px-[calc((100vw-72rem)/2+1.5rem)] scrollbar-hide">
+        {testimonials.map((testimonial, index) => (
+          <div 
+            key={index} 
+            className="flex-shrink-0 w-80 md:w-96 snap-start bg-[#FF000D] p-8 pb-18 flex flex-col justify-between"
+            style={{ paddingBottom: '72px' }}
+          >
+            {/* Large quote mark */}
+            <div className="text-white/30 text-8xl font-serif leading-none mb-4">"</div>
+            
+            {/* Quote */}
+            <p className="text-xl md:text-2xl text-white leading-relaxed mb-6">
+              {testimonial.quote}
+            </p>
+
+            {/* Author */}
+            {testimonial.author && (
+              <p className="text-sm uppercase tracking-widest text-white/70 font-bold mt-auto">
+                — {testimonial.author}
+              </p>
+            )}
+          </div>
+        ))}
       </div>
     </section>
   );
