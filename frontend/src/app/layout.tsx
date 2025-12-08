@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import { getNavigation, getSiteSettings } from "@/lib/strapi";
+import { getSiteSettings } from "@/lib/strapi";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,27 +21,10 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const [navigation, settings] = await Promise.all([
-    getNavigation(),
-    getSiteSettings(),
-  ]);
-
   return (
-    <html lang="en" data-theme={settings?.theme || "corporate"}>
-      <body className={`${inter.className} min-h-screen flex flex-col`}>
-        <Header 
-          navigation={navigation} 
-          siteName={settings?.siteName || "Taco Bella's"} 
-        />
-        <main className="flex-1">
-          {children}
-        </main>
-        <Footer
-          navigation={navigation}
-          siteName={settings?.siteName || "Taco Bella's"}
-          copyrightText={settings?.copyrightText}
-          footerText={settings?.footerText}
-        />
+    <html lang="en" className="dark">
+      <body className={`${inter.className} min-h-screen bg-black text-white antialiased`}>
+        {children}
       </body>
     </html>
   );

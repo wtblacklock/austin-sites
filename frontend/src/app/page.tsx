@@ -1,5 +1,7 @@
-import { HeroTacoBellas, ImageGallery, TestimonialsStrip } from '@/sections';
+import { HeroHighlight, BentoImageCard, AnimatedTestimonials, SpotlightCard } from '@/components/aceternity';
+import { FloatingNav } from '@/components/aceternity/floating-navbar';
 import { getHero, getGalleryImages, getTestimonials, getMenuItems, getStrapiMediaUrl } from '@/lib/strapi';
+import Link from 'next/link';
 
 // Default/fallback data when Strapi is not available
 const defaultHero = {
@@ -7,7 +9,6 @@ const defaultHero = {
   subtitle: "Serving South Austin since 2008 – over 16 years at the same location! Fresh, affordable breakfast tacos and street tacos made with love. 4.6 stars on Yelp with 73+ reviews.",
   ctaLabel: "Find us today",
   ctaHref: "#location",
-  backgroundImage: "https://images.unsplash.com/photo-1504544750208-dc0358e63f7f?w=1920&h=1080&fit=crop",
 };
 
 const defaultGalleryImages = [
@@ -23,14 +24,17 @@ const defaultTestimonials = [
   {
     quote: "I think I found my new favorite taco truck! The owner is so friendly and helped with recommendations. I had the pastor and steak tacos and they were delicious!",
     author: "Linnea F.",
+    role: "Yelp Review",
   },
   {
     quote: "I love Taco Bella's. The owner behind the counter was so sweet, but most importantly the tacos were some of the best I have ever had. Fresh, hot, and delicious.",
     author: "Kim Y.",
+    role: "Yelp Review",
   },
   {
     quote: "Really great experience with wonderful food. Didn't realize they had been at this location for years already since I'm always on the hunt for a taco shop.",
     author: "Robert A.",
+    role: "Yelp Review",
   },
 ];
 
@@ -51,6 +55,13 @@ const defaultMenuItems = {
   ],
 };
 
+const navItems = [
+  { name: "Menu", link: "#menu" },
+  { name: "Gallery", link: "#gallery" },
+  { name: "Reviews", link: "#reviews" },
+  { name: "Location", link: "#location" },
+];
+
 export default async function HomePage() {
   // Fetch data from Strapi
   const [hero, galleryImages, testimonials, menuItems] = await Promise.all([
@@ -66,9 +77,6 @@ export default async function HomePage() {
     subtitle: hero?.subtitle || defaultHero.subtitle,
     ctaLabel: hero?.ctaLabel || defaultHero.ctaLabel,
     ctaHref: hero?.ctaHref || defaultHero.ctaHref,
-    backgroundImage: hero?.backgroundImage?.url 
-      ? getStrapiMediaUrl(hero.backgroundImage.url) 
-      : defaultHero.backgroundImage,
   };
 
   // Process gallery images
@@ -84,6 +92,7 @@ export default async function HomePage() {
     ? testimonials.map(t => ({
         quote: t.quote,
         author: t.author,
+        role: "Yelp Review",
         avatar: t.avatar?.url ? getStrapiMediaUrl(t.avatar.url) : undefined,
       }))
     : defaultTestimonials;
@@ -97,152 +106,187 @@ export default async function HomePage() {
     .map(item => ({ name: item.name, price: item.price }));
 
   return (
-    <main>
+    <main className="bg-black">
+      {/* Floating Navigation */}
+      <FloatingNav 
+        navItems={navItems}
+        logo={
+          <Link href="/" className="text-xl font-bold text-white">
+            🌮 Taco Bella&apos;s
+          </Link>
+        }
+      />
+
       {/* Hero Section */}
-      <HeroTacoBellas
+      <HeroHighlight
         title={heroData.title}
         subtitle={heroData.subtitle}
         ctaLabel={heroData.ctaLabel}
         ctaHref={heroData.ctaHref}
-        backgroundImage={heroData.backgroundImage}
+        secondaryCtaLabel="View Menu"
+        secondaryCtaHref="#menu"
       />
-
-      {/* Image Gallery Section */}
-      <ImageGallery
-        title="From the window to your plate"
-        subtitle="Fresh ingredients, authentic recipes, made with love every single day."
-        images={galleryData}
-      />
-
-      {/* Testimonials Section */}
-      <TestimonialsStrip
-        title="What the regulars say"
-        testimonials={testimonialsData}
-      />
-
-      {/* Location Section */}
-      <section id="location" className="py-16 px-4 bg-base-100">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Find Us</h2>
-          <p className="text-lg opacity-70 mb-8">
-            Come hungry, leave happy. We&apos;re parked and ready to serve!
-          </p>
-          
-          {/* Location card */}
-          <div className="card bg-base-200 shadow-xl max-w-md mx-auto">
-            <div className="card-body">
-              <div className="flex items-start gap-4">
-                <div className="text-3xl">📍</div>
-                <div className="text-left">
-                  <h3 className="font-bold text-lg">Taco Bella&apos;s</h3>
-                  <p className="opacity-70">3008 W Slaughter Ln</p>
-                  <p className="opacity-70">Austin, TX 78748</p>
-                </div>
-              </div>
-              
-              <div className="divider"></div>
-              
-              <div className="flex items-start gap-4">
-                <div className="text-3xl">🕐</div>
-                <div className="text-left">
-                  <h3 className="font-bold text-lg">Hours</h3>
-                  <p className="opacity-70">Mon–Sat: 7am – 2pm</p>
-                  <p className="opacity-70">Sunday: Closed</p>
-                </div>
-              </div>
-              
-              <div className="divider"></div>
-              
-              <div className="flex items-start gap-4">
-                <div className="text-3xl">📞</div>
-                <div className="text-left">
-                  <h3 className="font-bold text-lg">Contact</h3>
-                  <p className="opacity-70">(512) 740-2289</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Google Maps Embed */}
-          <div className="mt-8 rounded-xl overflow-hidden max-w-2xl mx-auto">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3448.8!2d-97.8747!3d30.1697!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzDCsDEwJzExLjAiTiA5N8KwNTInMjkuMCJX!5e0!3m2!1sen!2sus!4v1234567890"
-              width="100%"
-              height="300"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="rounded-xl"
-            ></iframe>
-          </div>
-
-          {/* CTA */}
-          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="https://www.google.com/maps/search/?api=1&query=3008+W+Slaughter+Ln+Austin+TX+78748"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-primary"
-            >
-              Get Directions
-            </a>
-            <a href="tel:+15127402289" className="btn btn-outline">
-              Call to Order
-            </a>
-          </div>
-        </div>
-      </section>
 
       {/* Menu Section */}
-      <section id="menu" className="py-16 px-4 bg-base-200">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Menu</h2>
-          <p className="text-lg opacity-70 mb-8">
-            Simple. Delicious. Made fresh every day.
-          </p>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
-            {/* Breakfast Tacos */}
-            <div className="card bg-base-100 shadow-xl">
-              <div className="card-body">
-                <h3 className="card-title text-primary">
-                  🌅 Breakfast Tacos
-                </h3>
-                <ul className="space-y-3 mt-4">
-                  {(breakfastItems.length > 0 ? breakfastItems : defaultMenuItems.breakfast).map((item, index) => (
-                    <li key={index} className="flex justify-between">
-                      <span>{item.name}</span>
-                      <span className="font-bold">${item.price.toFixed(2)}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* Street Tacos */}
-            <div className="card bg-base-100 shadow-xl">
-              <div className="card-body">
-                <h3 className="card-title text-primary">
-                  🌮 Street Tacos
-                </h3>
-                <ul className="space-y-3 mt-4">
-                  {(lunchItems.length > 0 ? lunchItems : defaultMenuItems.lunch).map((item, index) => (
-                    <li key={index} className="flex justify-between">
-                      <span>{item.name}</span>
-                      <span className="font-bold">${item.price.toFixed(2)}</span>
-                    </li>
-                  ))}
-                </ul>
-            </div>
-            </div>
+      <section id="menu" className="relative py-24 px-6">
+        <div className="absolute inset-0 bg-gradient-to-b from-black via-zinc-950 to-black" />
+        <div className="relative mx-auto max-w-6xl">
+          <div className="mb-16 text-center">
+            <h2 className="mb-4 text-4xl font-bold text-white sm:text-5xl">
+              Our <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Menu</span>
+            </h2>
+            <p className="text-zinc-400">Fresh tacos made with love. Breakfast served all day!</p>
           </div>
 
-          <p className="mt-8 text-sm opacity-60">
-            All tacos served on fresh corn or flour tortillas. Breakfast served all day!
-          </p>
+          <div className="grid gap-8 md:grid-cols-2">
+            {/* Breakfast Tacos */}
+            <SpotlightCard className="p-8">
+              <div className="mb-6 flex items-center gap-3">
+                <span className="text-4xl">🌅</span>
+                <h3 className="text-2xl font-bold text-white">Breakfast Tacos</h3>
+              </div>
+              <ul className="space-y-4">
+                {(breakfastItems.length > 0 ? breakfastItems : defaultMenuItems.breakfast).map((item, index) => (
+                  <li key={index} className="flex items-center justify-between border-b border-white/10 pb-3">
+                    <span className="text-zinc-300">{item.name}</span>
+                    <span className="font-bold text-green-400">${item.price.toFixed(2)}</span>
+                  </li>
+                ))}
+              </ul>
+            </SpotlightCard>
+
+            {/* Street Tacos */}
+            <SpotlightCard className="p-8">
+              <div className="mb-6 flex items-center gap-3">
+                <span className="text-4xl">🌮</span>
+                <h3 className="text-2xl font-bold text-white">Street Tacos</h3>
+              </div>
+              <ul className="space-y-4">
+                {(lunchItems.length > 0 ? lunchItems : defaultMenuItems.lunch).map((item, index) => (
+                  <li key={index} className="flex items-center justify-between border-b border-white/10 pb-3">
+                    <span className="text-zinc-300">{item.name}</span>
+                    <span className="font-bold text-green-400">${item.price.toFixed(2)}</span>
+                  </li>
+                ))}
+              </ul>
+            </SpotlightCard>
+          </div>
         </div>
       </section>
+
+      {/* Gallery Section */}
+      <section id="gallery" className="relative py-24 px-6">
+        <div className="absolute inset-0 bg-zinc-950" />
+        <div className="relative mx-auto max-w-6xl">
+          <div className="mb-16 text-center">
+            <h2 className="mb-4 text-4xl font-bold text-white sm:text-5xl">
+              Fresh From The <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Grill</span>
+            </h2>
+            <p className="text-zinc-400">See what&apos;s cooking at Taco Bella&apos;s</p>
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {galleryData.map((image, index) => (
+              <BentoImageCard
+                key={index}
+                src={image.src}
+                alt={image.alt}
+                className={index === 0 ? "sm:col-span-2 lg:col-span-1" : ""}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section id="reviews" className="relative py-24 px-6">
+        <div className="absolute inset-0 bg-gradient-to-b from-zinc-950 via-black to-zinc-950" />
+        <div className="relative mx-auto max-w-6xl">
+          <div className="mb-16 text-center">
+            <h2 className="mb-4 text-4xl font-bold text-white sm:text-5xl">
+              What People <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Say</span>
+            </h2>
+            <p className="text-zinc-400">4.6 stars on Yelp • 73+ Reviews</p>
+          </div>
+
+          <AnimatedTestimonials testimonials={testimonialsData} />
+        </div>
+      </section>
+
+      {/* Location Section */}
+      <section id="location" className="relative py-24 px-6">
+        <div className="absolute inset-0 bg-zinc-950" />
+        <div className="relative mx-auto max-w-4xl">
+          <div className="mb-16 text-center">
+            <h2 className="mb-4 text-4xl font-bold text-white sm:text-5xl">
+              Find <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Us</span>
+            </h2>
+            <p className="text-zinc-400">Come visit us in South Austin!</p>
+          </div>
+
+          <div className="grid gap-8 md:grid-cols-3">
+            {/* Address */}
+            <SpotlightCard className="p-6 text-center">
+              <div className="mb-4 text-4xl">📍</div>
+              <h3 className="mb-2 text-lg font-bold text-white">Address</h3>
+              <p className="text-zinc-400">3008 W Slaughter Ln</p>
+              <p className="text-zinc-400">Austin, TX 78748</p>
+              <a
+                href="https://maps.google.com/?q=3008+W+Slaughter+Ln+Austin+TX+78748"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-4 inline-block text-sm font-medium text-green-400 hover:text-green-300"
+              >
+                Get Directions →
+              </a>
+            </SpotlightCard>
+
+            {/* Hours */}
+            <SpotlightCard className="p-6 text-center">
+              <div className="mb-4 text-4xl">🕐</div>
+              <h3 className="mb-2 text-lg font-bold text-white">Hours</h3>
+              <p className="text-zinc-400">Mon – Sat: 7am – 2pm</p>
+              <p className="text-zinc-400">Sunday: Closed</p>
+              <p className="mt-4 text-sm text-green-400">Breakfast served all day!</p>
+            </SpotlightCard>
+
+            {/* Phone */}
+            <SpotlightCard className="p-6 text-center">
+              <div className="mb-4 text-4xl">📞</div>
+              <h3 className="mb-2 text-lg font-bold text-white">Phone</h3>
+              <p className="text-zinc-400">(512) 740-2289</p>
+              <a
+                href="tel:+15127402289"
+                className="mt-4 inline-block rounded-full bg-gradient-to-r from-green-500 to-emerald-600 px-6 py-2 text-sm font-semibold text-white transition-transform hover:scale-105"
+              >
+                Call Now
+              </a>
+            </SpotlightCard>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-white/10 bg-black py-12 px-6">
+        <div className="mx-auto max-w-6xl text-center">
+          <p className="mb-4 text-2xl font-bold text-white">🌮 Taco Bella&apos;s</p>
+          <p className="mb-6 text-zinc-500">Serving South Austin since 2008</p>
+          <div className="flex justify-center gap-6 text-zinc-400">
+            <a href="https://www.yelp.com/biz/taco-bellas-austin" target="_blank" rel="noopener noreferrer" className="hover:text-green-400 transition-colors">
+              Yelp
+            </a>
+            <span>•</span>
+            <a href="tel:+15127402289" className="hover:text-green-400 transition-colors">
+              (512) 740-2289
+            </a>
+            <span>•</span>
+            <span>3008 W Slaughter Ln, Austin TX</span>
+          </div>
+          <p className="mt-8 text-sm text-zinc-600">
+            © {new Date().getFullYear()} Taco Bella&apos;s. All rights reserved.
+          </p>
+        </div>
+      </footer>
     </main>
   );
 }
