@@ -3,16 +3,12 @@ import { ReactNode } from 'react';
 interface ContainerProps {
   children: ReactNode;
   className?: string;
-  narrow?: boolean;
 }
 
-export default function Container({ children, className = '', narrow = false }: ContainerProps) {
+export default function Container({ children, className = '' }: ContainerProps) {
   return (
-    <div
-      className={`container mx-auto px-6 ${narrow ? 'max-w-3xl' : ''} ${className}`}
-    >
+    <div className={`container mx-auto px-4 ${className}`}>
       {children}
     </div>
   );
 }
-

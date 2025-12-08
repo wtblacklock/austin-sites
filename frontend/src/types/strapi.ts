@@ -36,7 +36,7 @@ export interface Page {
   documentId: string;
   title: string;
   slug: string;
-  pageType: 'about' | 'contact' | 'legal' | 'landing' | 'custom';
+  pageType: 'about' | 'contact' | 'legal' | 'landing' | 'services' | 'custom';
   heroTitle?: string;
   heroDescription?: string;
   heroImage?: StrapiImage;
@@ -46,6 +46,31 @@ export interface Page {
   createdAt: string;
   updatedAt: string;
   publishedAt: string;
+}
+
+export interface Service {
+  id: number;
+  documentId: string;
+  title: string;
+  slug: string;
+  description: string;
+  content?: string;
+  icon?: string;
+  image?: StrapiImage;
+  price?: string;
+  order: number;
+}
+
+export interface Testimonial {
+  id: number;
+  documentId: string;
+  quote: string;
+  author: string;
+  role?: string;
+  company?: string;
+  avatar?: StrapiImage;
+  rating: number;
+  featured: boolean;
 }
 
 export interface SiteSetting {
@@ -58,9 +83,13 @@ export interface SiteSetting {
   logo?: StrapiImage;
   favicon?: StrapiImage;
   socialImage?: StrapiImage;
-  enableThemeSwitcher: boolean;
+  primaryColor?: string;
+  theme?: string;
   footerText?: string;
   copyrightText?: string;
+  contactEmail?: string;
+  contactPhone?: string;
+  address?: string;
 }
 
 export interface NavigationItem {
@@ -97,4 +126,3 @@ export interface StrapiListResponse<T> {
     };
   };
 }
-

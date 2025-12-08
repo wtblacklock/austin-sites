@@ -1,93 +1,69 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
 import { NavigationItem } from '@/types/strapi';
+import ThemeSwitcher from '@/components/ui/ThemeSwitcher';
 
 interface HeaderProps {
   navigation: NavigationItem[];
   siteName?: string;
 }
 
-export default function Header({ navigation, siteName = 'Austin Sites' }: HeaderProps) {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
+export default function Header({ navigation, siteName = 'Business Name' }: HeaderProps) {
   return (
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-stone-200">
-      <nav className="container mx-auto px-6 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="text-2xl font-bold text-stone-900 tracking-tight">
-            {siteName}
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
-            {navigation.map((item) => (
-              <Link
-                key={item.id}
-                href={item.slug}
-                target={item.openInNewTab ? '_blank' : undefined}
-                rel={item.isExternal ? 'noopener noreferrer' : undefined}
-                className="text-stone-600 hover:text-stone-900 transition-colors font-medium"
-              >
-                {item.title}
-              </Link>
-            ))}
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 rounded-lg hover:bg-stone-100 transition-colors"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            <svg
-              className="w-6 h-6 text-stone-700"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              {mobileMenuOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
+    <header className="navbar bg-base-100 shadow-sm sticky top-0 z-50">
+      <div className="navbar-start">
+        {/* Mobile Menu */}
+        <div className="dropdown">
+          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" />
             </svg>
-          </button>
-        </div>
-
-        {/* Mobile Navigation */}
-        {mobileMenuOpen && (
-          <div className="md:hidden mt-4 pb-4 border-t border-stone-200 pt-4">
-            <div className="flex flex-col gap-4">
-              {navigation.map((item) => (
+          </div>
+          <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+            {navigation.map((item) => (
+              <li key={item.id}>
                 <Link
-                  key={item.id}
                   href={item.slug}
                   target={item.openInNewTab ? '_blank' : undefined}
                   rel={item.isExternal ? 'noopener noreferrer' : undefined}
-                  className="text-stone-600 hover:text-stone-900 transition-colors font-medium"
-                  onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.title}
                 </Link>
-              ))}
-            </div>
-          </div>
-        )}
-      </nav>
+              </li>
+            ))}
+          </ul>
+        </div>
+        {/* Logo */}
+        <Link href="/" className="btn btn-ghost text-xl font-bold">
+          {siteName}
+        </Link>
+      </div>
+
+      {/* Desktop Navigation */}
+      <div className="navbar-center hidden lg:flex">
+        <ul className="menu menu-horizontal px-1">
+          {navigation.map((item) => (
+            <li key={item.id}>
+              <Link
+                href={item.slug}
+                target={item.openInNewTab ? '_blank' : undefined}
+                rel={item.isExternal ? 'noopener noreferrer' : undefined}
+              >
+                {item.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Right side - Theme & CTA */}
+      <div className="navbar-end gap-2">
+        <ThemeSwitcher />
+        <Link href="/contact" className="btn btn-primary">
+          Contact Us
+        </Link>
+      </div>
     </header>
   );
 }
-

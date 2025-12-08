@@ -1,6 +1,8 @@
 import {
   BlogPost,
   Page,
+  Service,
+  Testimonial,
   SiteSetting,
   NavigationItem,
   StrapiResponse,
@@ -28,7 +30,7 @@ async function fetchAPI<T>(
       ...headers,
       ...options.headers,
     },
-    next: { revalidate: 60 }, // Revalidate every 60 seconds
+    next: { revalidate: 60 },
   });
 
   if (!res.ok) {
@@ -101,6 +103,32 @@ export async function getPageByType(pageType: string): Promise<Page | null> {
   }
 }
 
+// Services
+export async function getServices(): Promise<Service[]> {
+  try {
+    const response = await fetchAPI<StrapiListResponse<Service>>(
+      '/services?populate=image&sort=order:asc'
+    );
+    return response.data || [];
+  } catch (error) {
+    console.error('Error fetching services:', error);
+    return [];
+  }
+}
+
+// Testimonials
+export async function getTestimonials(): Promise<Testimonial[]> {
+  try {
+    const response = await fetchAPI<StrapiListResponse<Testimonial>>(
+      '/testimonials?populate=avatar&filters[featured][$eq]=true'
+    );
+    return response.data || [];
+  } catch (error) {
+    console.error('Error fetching testimonials:', error);
+    return [];
+  }
+}
+
 // Site Settings
 export async function getSiteSettings(): Promise<SiteSetting | null> {
   try {
@@ -133,4 +161,3 @@ export function getStrapiMediaUrl(url: string | undefined): string {
   if (url.startsWith('http')) return url;
   return `${STRAPI_URL}${url}`;
 }
-

@@ -5,7 +5,7 @@
     "singularName": "site-setting",
     "pluralName": "site-settings",
     "displayName": "Site Settings",
-    "description": "Global site configuration"
+    "description": "Global site configuration for the business"
   },
   "options": {
     "draftAndPublish": false
@@ -15,7 +15,7 @@
     "siteName": {
       "type": "string",
       "required": true,
-      "default": "Austin Sites"
+      "default": "Business Name"
     },
     "siteTitle": {
       "type": "string",
@@ -45,16 +45,43 @@
       "required": false,
       "allowedTypes": ["images"]
     },
-    "enableThemeSwitcher": {
-      "type": "boolean",
-      "default": true
+    "theme": {
+      "type": "enumeration",
+      "enum": ["light", "dark", "corporate", "business", "emerald", "forest", "luxury", "dracula", "autumn", "nord"],
+      "default": "corporate"
+    },
+    "primaryColor": {
+      "type": "string"
     },
     "footerText": {
       "type": "text"
     },
     "copyrightText": {
       "type": "string"
+    },
+    "contactEmail": {
+      "type": "email"
+    },
+    "contactPhone": {
+      "type": "string"
+    },
+    "address": {
+      "type": "text"
+    },
+    "socialTwitter": {
+      "type": "string"
+    },
+    "socialFacebook": {
+      "type": "string"
+    },
+    "socialInstagram": {
+      "type": "string"
+    },
+    "socialLinkedin": {
+      "type": "string"
+    },
+    "googleAnalyticsId": {
+      "type": "string"
     }
   }
 }
-

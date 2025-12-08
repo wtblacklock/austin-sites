@@ -6,6 +6,7 @@ export default function ContactForm() {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
+    phone: '',
     subject: '',
     message: '',
   });
@@ -19,90 +20,113 @@ export default function ContactForm() {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
     } catch {
       setStatus('error');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium text-stone-700 mb-2">
-            Name
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="form-control w-full">
+          <label className="label">
+            <span className="label-text">Name</span>
           </label>
           <input
             type="text"
-            id="name"
+            placeholder="Your name"
+            className="input input-bordered w-full"
             required
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl border border-stone-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition-all"
-            placeholder="Your name"
           />
         </div>
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-stone-700 mb-2">
-            Email
+        <div className="form-control w-full">
+          <label className="label">
+            <span className="label-text">Email</span>
           </label>
           <input
             type="email"
-            id="email"
+            placeholder="your@email.com"
+            className="input input-bordered w-full"
             required
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-            className="w-full px-4 py-3 rounded-xl border border-stone-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition-all"
-            placeholder="your@email.com"
           />
         </div>
       </div>
-      <div>
-        <label htmlFor="subject" className="block text-sm font-medium text-stone-700 mb-2">
-          Subject
-        </label>
-        <input
-          type="text"
-          id="subject"
-          required
-          value={formData.subject}
-          onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-          className="w-full px-4 py-3 rounded-xl border border-stone-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition-all"
-          placeholder="What's this about?"
-        />
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="form-control w-full">
+          <label className="label">
+            <span className="label-text">Phone (optional)</span>
+          </label>
+          <input
+            type="tel"
+            placeholder="(555) 123-4567"
+            className="input input-bordered w-full"
+            value={formData.phone}
+            onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+          />
+        </div>
+        <div className="form-control w-full">
+          <label className="label">
+            <span className="label-text">Subject</span>
+          </label>
+          <select
+            className="select select-bordered w-full"
+            required
+            value={formData.subject}
+            onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+          >
+            <option value="" disabled>Select a subject</option>
+            <option value="general">General Inquiry</option>
+            <option value="quote">Request a Quote</option>
+            <option value="support">Support</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
       </div>
-      <div>
-        <label htmlFor="message" className="block text-sm font-medium text-stone-700 mb-2">
-          Message
+
+      <div className="form-control w-full">
+        <label className="label">
+          <span className="label-text">Message</span>
         </label>
         <textarea
-          id="message"
+          className="textarea textarea-bordered h-32"
+          placeholder="How can we help you?"
           required
-          rows={5}
           value={formData.message}
           onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-          className="w-full px-4 py-3 rounded-xl border border-stone-200 focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 outline-none transition-all resize-none"
-          placeholder="Your message..."
         />
       </div>
+
       <button
         type="submit"
+        className={`btn btn-primary w-full ${status === 'loading' ? 'loading' : ''}`}
         disabled={status === 'loading'}
-        className="w-full bg-stone-900 text-white py-4 rounded-xl font-medium hover:bg-stone-800 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {status === 'loading' ? 'Sending...' : 'Send Message'}
       </button>
+
       {status === 'success' && (
-        <p className="text-green-600 text-center font-medium">
-          Message sent successfully! We&apos;ll get back to you soon.
-        </p>
+        <div className="alert alert-success">
+          <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>Message sent successfully! We&apos;ll get back to you soon.</span>
+        </div>
       )}
+
       {status === 'error' && (
-        <p className="text-red-600 text-center font-medium">
-          Something went wrong. Please try again.
-        </p>
+        <div className="alert alert-error">
+          <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <span>Something went wrong. Please try again.</span>
+        </div>
       )}
     </form>
   );
 }
-
