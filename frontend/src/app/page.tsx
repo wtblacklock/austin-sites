@@ -88,9 +88,13 @@ export default async function HomePage() {
       }))
     : defaultTestimonials;
 
-  // Process menu items
-  const breakfastItems = menuItems.filter(item => item.category === 'breakfast');
-  const lunchItems = menuItems.filter(item => item.category === 'lunch');
+  // Process menu items - map to consistent format
+  const breakfastItems = menuItems
+    .filter(item => item.category === 'breakfast')
+    .map(item => ({ name: item.name, price: item.price }));
+  const lunchItems = menuItems
+    .filter(item => item.category === 'lunch')
+    .map(item => ({ name: item.name, price: item.price }));
 
   return (
     <main>
@@ -208,8 +212,8 @@ export default async function HomePage() {
                 <ul className="space-y-3 mt-4">
                   {(breakfastItems.length > 0 ? breakfastItems : defaultMenuItems.breakfast).map((item, index) => (
                     <li key={index} className="flex justify-between">
-                      <span>{'name' in item ? item.name : item.name}</span>
-                      <span className="font-bold">${typeof item.price === 'number' ? item.price.toFixed(2) : item.price}</span>
+                      <span>{item.name}</span>
+                      <span className="font-bold">${item.price.toFixed(2)}</span>
                     </li>
                   ))}
                 </ul>
@@ -225,10 +229,10 @@ export default async function HomePage() {
                 <ul className="space-y-3 mt-4">
                   {(lunchItems.length > 0 ? lunchItems : defaultMenuItems.lunch).map((item, index) => (
                     <li key={index} className="flex justify-between">
-                      <span>{'name' in item ? item.name : item.name}</span>
-                      <span className="font-bold">${typeof item.price === 'number' ? item.price.toFixed(2) : item.price}</span>
+                      <span>{item.name}</span>
+                      <span className="font-bold">${item.price.toFixed(2)}</span>
                     </li>
-              ))}
+                  ))}
                 </ul>
             </div>
             </div>
