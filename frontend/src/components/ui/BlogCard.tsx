@@ -44,14 +44,14 @@ export default function BlogCard({ post }: BlogCardProps) {
           <Link href={`/blog/${post.slug}`} className="hover:text-primary transition-colors">
             {post.title}
           </Link>
-        </h2>
+          </h2>
         {post.excerpt && (
           <p className="opacity-70 line-clamp-3">{post.excerpt}</p>
         )}
         <div className="card-actions justify-end">
           <Link href={`/blog/${post.slug}`} className="btn btn-primary btn-sm">
             Read More
-          </Link>
+        </Link>
         </div>
       </div>
     </div>

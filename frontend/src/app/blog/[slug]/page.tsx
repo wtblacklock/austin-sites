@@ -71,14 +71,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
           <h1 className="text-4xl md:text-5xl font-bold mb-6">{post.title}</h1>
 
-          {post.tags && post.tags.length > 0 && (
+            {post.tags && post.tags.length > 0 && (
             <div className="flex gap-2 flex-wrap">
-              {post.tags.map((tag, index) => (
+                  {post.tags.map((tag, index) => (
                 <span key={index} className="badge badge-primary">
-                  {tag}
-                </span>
-              ))}
-            </div>
+                      {tag}
+                    </span>
+                  ))}
+                </div>
           )}
         </Container>
       </header>
@@ -87,15 +87,15 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       {imageUrl && (
         <Container className="max-w-4xl -mt-8">
           <figure className="relative aspect-video rounded-box overflow-hidden shadow-2xl">
-            <Image
-              src={imageUrl}
-              alt={post.featuredImage?.alternativeText || post.title}
-              fill
-              className="object-cover"
-              priority
-            />
+              <Image
+                src={imageUrl}
+                alt={post.featuredImage?.alternativeText || post.title}
+                fill
+                className="object-cover"
+                priority
+              />
           </figure>
-        </Container>
+          </Container>
       )}
 
       {/* Content */}
@@ -114,7 +114,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
             <Link href="/blog" className="btn btn-outline">
               ← Back to Blog
-            </Link>
+              </Link>
             <div className="flex gap-2">
               <span className="opacity-60">Share:</span>
               <a href="#" className="btn btn-ghost btn-sm btn-circle">

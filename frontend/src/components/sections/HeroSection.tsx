@@ -31,20 +31,20 @@ export default function HeroSection({
         <div className="hero-content text-center">
           <div className="max-w-2xl">
             <h1 className="text-5xl font-bold">{title}</h1>
-            {description && (
+          {description && (
               <p className="py-6 text-lg opacity-80">{description}</p>
-            )}
+          )}
             <div className="flex gap-4 justify-center flex-wrap">
-              {ctaText && ctaLink && (
+          {ctaText && ctaLink && (
                 <Link href={ctaLink} className="btn btn-primary">
-                  {ctaText}
+              {ctaText}
                 </Link>
               )}
               {secondaryCtaText && secondaryCtaLink && (
                 <Link href={secondaryCtaLink} className="btn btn-outline">
                   {secondaryCtaText}
-                </Link>
-              )}
+            </Link>
+          )}
             </div>
           </div>
         </div>
@@ -57,17 +57,17 @@ export default function HeroSection({
     return (
       <div className="hero min-h-[70vh] bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse gap-8">
-          {imageUrl && (
+            {imageUrl && (
             <div className="relative w-full lg:w-1/2 aspect-video lg:aspect-square rounded-lg overflow-hidden shadow-2xl">
-              <Image
-                src={imageUrl}
-                alt={imageAlt}
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
-          )}
+                <Image
+                  src={imageUrl}
+                  alt={imageAlt}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+            )}
           <div className="lg:w-1/2">
             <h1 className="text-5xl font-bold">{title}</h1>
             {description && (

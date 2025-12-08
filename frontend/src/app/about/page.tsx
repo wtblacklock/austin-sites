@@ -28,10 +28,10 @@ export default async function AboutPage() {
       <section className="py-20 bg-base-100">
         <Container className="max-w-4xl">
           {page?.content ? (
-            <div
+          <div
               className="prose-content"
               dangerouslySetInnerHTML={{ __html: page.content }}
-            />
+          />
           ) : (
             <>
               <h2 className="text-3xl font-bold mb-6">Our Story</h2>

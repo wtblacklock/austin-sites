@@ -34,16 +34,16 @@ export default function Header({ navigation, siteName = 'Business Name' }: Heade
             ))}
           </ul>
         </div>
-        {/* Logo */}
+          {/* Logo */}
         <Link href="/" className="btn btn-ghost text-xl font-bold">
-          {siteName}
-        </Link>
+            {siteName}
+          </Link>
       </div>
 
-      {/* Desktop Navigation */}
+          {/* Desktop Navigation */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">
-          {navigation.map((item) => (
+            {navigation.map((item) => (
             <li key={item.id}>
               <Link
                 href={item.slug}
@@ -53,17 +53,17 @@ export default function Header({ navigation, siteName = 'Business Name' }: Heade
                 {item.title}
               </Link>
             </li>
-          ))}
+            ))}
         </ul>
-      </div>
+          </div>
 
       {/* Right side - Theme & CTA */}
       <div className="navbar-end gap-2">
         <ThemeSwitcher />
         <Link href="/contact" className="btn btn-primary">
           Contact Us
-        </Link>
-      </div>
+                </Link>
+          </div>
     </header>
   );
 }

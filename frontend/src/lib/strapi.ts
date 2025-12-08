@@ -5,6 +5,9 @@ import {
   Testimonial,
   SiteSetting,
   NavigationItem,
+  Hero,
+  GalleryImage,
+  MenuItem,
   StrapiResponse,
   StrapiListResponse,
 } from '@/types/strapi';
@@ -15,7 +18,7 @@ const STRAPI_API_TOKEN = process.env.STRAPI_API_TOKEN;
 async function fetchAPI<T>(
   endpoint: string,
   options: RequestInit = {}
-): Promise<T> {
+): Promise<T | null> {
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
   };
@@ -24,135 +27,126 @@ async function fetchAPI<T>(
     headers['Authorization'] = `Bearer ${STRAPI_API_TOKEN}`;
   }
 
+  try {
   const res = await fetch(`${STRAPI_URL}/api${endpoint}`, {
     ...options,
     headers: {
       ...headers,
       ...options.headers,
     },
-    next: { revalidate: 60 },
+      next: { revalidate: 60 },
   });
 
   if (!res.ok) {
-    console.error(`Strapi API error: ${res.status} ${res.statusText}`);
-    throw new Error(`Failed to fetch from Strapi: ${res.statusText}`);
+      // Silently fail - Strapi might not be running
+      return null;
   }
 
   return res.json();
+  } catch {
+    // Silently fail - Strapi might not be running
+    return null;
+  }
 }
 
 // Blog Posts
 export async function getBlogPosts(): Promise<BlogPost[]> {
-  try {
     const response = await fetchAPI<StrapiListResponse<BlogPost>>(
       '/blog-posts?populate=featuredImage&sort=publishDate:desc&publicationState=live'
     );
-    return response.data || [];
-  } catch (error) {
-    console.error('Error fetching blog posts:', error);
-    return [];
-  }
+  return response?.data || [];
 }
 
 export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> {
-  try {
     const response = await fetchAPI<StrapiListResponse<BlogPost>>(
       `/blog-posts?filters[slug][$eq]=${slug}&populate=featuredImage&publicationState=live`
     );
-    return response.data?.[0] || null;
-  } catch (error) {
-    console.error('Error fetching blog post:', error);
-    return null;
-  }
+  return response?.data?.[0] || null;
 }
 
 // Pages
 export async function getPages(): Promise<Page[]> {
-  try {
     const response = await fetchAPI<StrapiListResponse<Page>>(
       '/pages?populate=heroImage&publicationState=live'
     );
-    return response.data || [];
-  } catch (error) {
-    console.error('Error fetching pages:', error);
-    return [];
-  }
+  return response?.data || [];
 }
 
 export async function getPageBySlug(slug: string): Promise<Page | null> {
-  try {
     const response = await fetchAPI<StrapiListResponse<Page>>(
       `/pages?filters[slug][$eq]=${slug}&populate=heroImage&publicationState=live`
     );
-    return response.data?.[0] || null;
-  } catch (error) {
-    console.error('Error fetching page:', error);
-    return null;
-  }
+  return response?.data?.[0] || null;
 }
 
 export async function getPageByType(pageType: string): Promise<Page | null> {
-  try {
     const response = await fetchAPI<StrapiListResponse<Page>>(
       `/pages?filters[pageType][$eq]=${pageType}&populate=heroImage&publicationState=live`
     );
-    return response.data?.[0] || null;
-  } catch (error) {
-    console.error('Error fetching page by type:', error);
-    return null;
-  }
+  return response?.data?.[0] || null;
 }
 
 // Services
 export async function getServices(): Promise<Service[]> {
-  try {
-    const response = await fetchAPI<StrapiListResponse<Service>>(
-      '/services?populate=image&sort=order:asc'
-    );
-    return response.data || [];
-  } catch (error) {
-    console.error('Error fetching services:', error);
-    return [];
-  }
+  const response = await fetchAPI<StrapiListResponse<Service>>(
+    '/services?populate=image&sort=order:asc'
+  );
+  return response?.data || [];
 }
 
 // Testimonials
 export async function getTestimonials(): Promise<Testimonial[]> {
-  try {
-    const response = await fetchAPI<StrapiListResponse<Testimonial>>(
-      '/testimonials?populate=avatar&filters[featured][$eq]=true'
-    );
-    return response.data || [];
-  } catch (error) {
-    console.error('Error fetching testimonials:', error);
-    return [];
-  }
+  const response = await fetchAPI<StrapiListResponse<Testimonial>>(
+    '/testimonials?populate=avatar&filters[featured][$eq]=true'
+  );
+  return response?.data || [];
 }
 
 // Site Settings
 export async function getSiteSettings(): Promise<SiteSetting | null> {
-  try {
-    const response = await fetchAPI<StrapiResponse<SiteSetting>>(
-      '/site-setting?populate=logo,favicon,socialImage'
-    );
-    return response.data || null;
-  } catch (error) {
-    console.error('Error fetching site settings:', error);
-    return null;
-  }
+  const response = await fetchAPI<StrapiResponse<SiteSetting>>(
+    '/site-setting?populate=*'
+  );
+  return response?.data || null;
 }
 
 // Navigation
 export async function getNavigation(): Promise<NavigationItem[]> {
-  try {
     const response = await fetchAPI<StrapiListResponse<NavigationItem>>(
       '/navigation-items?sort=order:asc'
     );
-    return response.data || [];
-  } catch (error) {
-    console.error('Error fetching navigation:', error);
-    return [];
-  }
+  return response?.data || [];
+}
+
+// Hero Section
+export async function getHero(): Promise<Hero | null> {
+  const response = await fetchAPI<StrapiResponse<Hero>>(
+    '/hero?populate=backgroundImage'
+  );
+  return response?.data || null;
+}
+
+// Gallery Images
+export async function getGalleryImages(): Promise<GalleryImage[]> {
+  const response = await fetchAPI<StrapiListResponse<GalleryImage>>(
+    '/gallery-images?populate=image&sort=order:asc&publicationState=live'
+  );
+  return response?.data || [];
+}
+
+// Menu Items
+export async function getMenuItems(): Promise<MenuItem[]> {
+  const response = await fetchAPI<StrapiListResponse<MenuItem>>(
+    '/menu-items?populate=image&sort=order:asc&publicationState=live'
+  );
+  return response?.data || [];
+}
+
+export async function getMenuItemsByCategory(category: string): Promise<MenuItem[]> {
+  const response = await fetchAPI<StrapiListResponse<MenuItem>>(
+    `/menu-items?filters[category][$eq]=${category}&populate=image&sort=order:asc&publicationState=live`
+  );
+  return response?.data || [];
 }
 
 // Helper to get full image URL

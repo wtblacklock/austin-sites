@@ -14,8 +14,8 @@ export default function FeatureCard({ title, description, icon, href }: FeatureC
         {icon && (
           <div className="text-primary mb-4">
             {icon}
-          </div>
-        )}
+        </div>
+      )}
         <h3 className="card-title">{title}</h3>
         {description && (
           <p className="opacity-70">{description}</p>
@@ -31,7 +31,7 @@ export default function FeatureCard({ title, description, icon, href }: FeatureC
 
   if (href) {
     return <Link href={href}>{content}</Link>;
-  }
+}
 
   return content;
 }

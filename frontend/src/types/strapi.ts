@@ -102,6 +102,36 @@ export interface NavigationItem {
   openInNewTab: boolean;
 }
 
+export interface Hero {
+  id: number;
+  documentId: string;
+  title: string;
+  subtitle?: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+  backgroundImage?: StrapiImage;
+}
+
+export interface GalleryImage {
+  id: number;
+  documentId: string;
+  image: StrapiImage;
+  alt: string;
+  order: number;
+}
+
+export interface MenuItem {
+  id: number;
+  documentId: string;
+  name: string;
+  description?: string;
+  price: number;
+  category: 'breakfast' | 'lunch' | 'drinks' | 'sides';
+  image?: StrapiImage;
+  featured: boolean;
+  order: number;
+}
+
 // Strapi API response wrapper
 export interface StrapiResponse<T> {
   data: T;

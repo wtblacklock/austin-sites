@@ -61,8 +61,8 @@ export default function ContactForm() {
         <div className="form-control w-full">
           <label className="label">
             <span className="label-text">Phone (optional)</span>
-          </label>
-          <input
+        </label>
+        <input
             type="tel"
             placeholder="(555) 123-4567"
             className="input input-bordered w-full"
@@ -76,9 +76,9 @@ export default function ContactForm() {
           </label>
           <select
             className="select select-bordered w-full"
-            required
-            value={formData.subject}
-            onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
+          required
+          value={formData.subject}
+          onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
           >
             <option value="" disabled>Select a subject</option>
             <option value="general">General Inquiry</option>

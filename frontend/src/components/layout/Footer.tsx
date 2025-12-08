@@ -20,25 +20,25 @@ export default function Footer({
     <footer className="footer footer-center bg-base-200 text-base-content p-10">
       <aside>
         <Link href="/" className="text-2xl font-bold">
-          {siteName}
-        </Link>
-        {footerText && (
+              {siteName}
+            </Link>
+            {footerText && (
           <p className="max-w-md">{footerText}</p>
-        )}
+            )}
       </aside>
       <nav>
         <div className="grid grid-flow-col gap-4">
-          {navigation.map((item) => (
-            <Link
+              {navigation.map((item) => (
+                  <Link
               key={item.id}
-              href={item.slug}
-              target={item.openInNewTab ? '_blank' : undefined}
-              rel={item.isExternal ? 'noopener noreferrer' : undefined}
+                    href={item.slug}
+                    target={item.openInNewTab ? '_blank' : undefined}
+                    rel={item.isExternal ? 'noopener noreferrer' : undefined}
               className="link link-hover"
-            >
-              {item.title}
-            </Link>
-          ))}
+                  >
+                    {item.title}
+                  </Link>
+              ))}
         </div>
       </nav>
       <nav>

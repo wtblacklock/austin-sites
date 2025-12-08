@@ -1,213 +1,244 @@
-import Link from 'next/link';
-import HeroSection from '@/components/sections/HeroSection';
-import Container from '@/components/ui/Container';
-import FeatureCard from '@/components/ui/FeatureCard';
-import BlogCard from '@/components/ui/BlogCard';
-import TestimonialCard from '@/components/ui/TestimonialCard';
-import { getBlogPosts, getSiteSettings, getTestimonials } from '@/lib/strapi';
+import { HeroTacoBellas, ImageGallery, TestimonialsStrip } from '@/sections';
+import { getHero, getGalleryImages, getTestimonials, getMenuItems, getStrapiMediaUrl } from '@/lib/strapi';
+
+// Default/fallback data when Strapi is not available
+const defaultHero = {
+  title: "Taco Bella's",
+  subtitle: "Serving South Austin since 2008 – over 16 years at the same location! Fresh, affordable breakfast tacos and street tacos made with love. 4.6 stars on Yelp with 73+ reviews.",
+  ctaLabel: "Find us today",
+  ctaHref: "#location",
+  backgroundImage: "https://images.unsplash.com/photo-1504544750208-dc0358e63f7f?w=1920&h=1080&fit=crop",
+};
+
+const defaultGalleryImages = [
+  { src: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&h=450&fit=crop", alt: "The Bella Taco – egg, bacon, potato & cheese" },
+  { src: "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=600&h=450&fit=crop", alt: "Beef fajita tacos on flour tortilla" },
+  { src: "https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?w=600&h=450&fit=crop", alt: "Al pastor tacos – crispy and delicious" },
+  { src: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&h=450&fit=crop", alt: "Migas taco with crispy chips" },
+  { src: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=600&h=450&fit=crop", alt: "Fresh red and green salsa" },
+  { src: "https://images.unsplash.com/photo-1613514785940-daed07799d9b?w=600&h=450&fit=crop", alt: "Carnitas on a fresh corn tortilla" },
+];
+
+const defaultTestimonials = [
+  {
+    quote: "I think I found my new favorite taco truck! The owner is so friendly and helped with recommendations. I had the pastor and steak tacos and they were delicious!",
+    author: "Linnea F.",
+  },
+  {
+    quote: "I love Taco Bella's. The owner behind the counter was so sweet, but most importantly the tacos were some of the best I have ever had. Fresh, hot, and delicious.",
+    author: "Kim Y.",
+  },
+  {
+    quote: "Really great experience with wonderful food. Didn't realize they had been at this location for years already since I'm always on the hunt for a taco shop.",
+    author: "Robert A.",
+  },
+];
+
+const defaultMenuItems = {
+  breakfast: [
+    { name: "Bella Taco (Egg, Bacon, Potato, Cheese)", price: 4 },
+    { name: "Bacon & Egg", price: 3.5 },
+    { name: "Migas", price: 4 },
+    { name: "Chorizo & Egg", price: 4 },
+    { name: "Bean & Cheese", price: 3 },
+  ],
+  lunch: [
+    { name: "Beef Fajita", price: 4.5 },
+    { name: "Al Pastor", price: 4 },
+    { name: "Carnitas", price: 4 },
+    { name: "Steak Taco", price: 4.5 },
+    { name: "Barbacoa", price: 4.5 },
+  ],
+};
 
 export default async function HomePage() {
-  const [posts, settings, testimonials] = await Promise.all([
-    getBlogPosts(),
-    getSiteSettings(),
+  // Fetch data from Strapi
+  const [hero, galleryImages, testimonials, menuItems] = await Promise.all([
+    getHero(),
+    getGalleryImages(),
     getTestimonials(),
+    getMenuItems(),
   ]);
 
-  const recentPosts = posts.slice(0, 3);
+  // Process hero data
+  const heroData = {
+    title: hero?.title || defaultHero.title,
+    subtitle: hero?.subtitle || defaultHero.subtitle,
+    ctaLabel: hero?.ctaLabel || defaultHero.ctaLabel,
+    ctaHref: hero?.ctaHref || defaultHero.ctaHref,
+    backgroundImage: hero?.backgroundImage?.url 
+      ? getStrapiMediaUrl(hero.backgroundImage.url) 
+      : defaultHero.backgroundImage,
+  };
+
+  // Process gallery images
+  const galleryData = galleryImages.length > 0
+    ? galleryImages.map(img => ({
+        src: getStrapiMediaUrl(img.image.url),
+        alt: img.alt,
+      }))
+    : defaultGalleryImages;
+
+  // Process testimonials
+  const testimonialsData = testimonials.length > 0
+    ? testimonials.map(t => ({
+        quote: t.quote,
+        author: t.author,
+        avatar: t.avatar?.url ? getStrapiMediaUrl(t.avatar.url) : undefined,
+      }))
+    : defaultTestimonials;
+
+  // Process menu items
+  const breakfastItems = menuItems.filter(item => item.category === 'breakfast');
+  const lunchItems = menuItems.filter(item => item.category === 'lunch');
 
   return (
-    <>
+    <main>
       {/* Hero Section */}
-      <HeroSection
-        title={settings?.siteTitle || "Welcome to Our Business"}
-        description={settings?.siteDescription || "We provide exceptional services to help your business grow. Discover how we can help you achieve your goals."}
-        ctaText="Get Started"
-        ctaLink="/contact"
-        secondaryCtaText="Learn More"
-        secondaryCtaLink="/about"
-        variant="centered"
+      <HeroTacoBellas
+        title={heroData.title}
+        subtitle={heroData.subtitle}
+        ctaLabel={heroData.ctaLabel}
+        ctaHref={heroData.ctaHref}
+        backgroundImage={heroData.backgroundImage}
       />
 
-      {/* Features/Services Section */}
-      <section className="py-20 bg-base-100">
-        <Container>
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Our Services</h2>
-            <p className="text-lg opacity-70 max-w-2xl mx-auto">
-              We offer a wide range of services designed to meet your needs and exceed your expectations.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <FeatureCard
-              title="Service One"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore."
-              href="/services"
-              icon={
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                </svg>
-              }
-            />
-            <FeatureCard
-              title="Service Two"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore."
-              href="/services"
-              icon={
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                </svg>
-              }
-            />
-            <FeatureCard
-              title="Service Three"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore."
-              href="/services"
-              icon={
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              }
-            />
-          </div>
-          <div className="text-center mt-10">
-            <Link href="/services" className="btn btn-primary btn-lg">
-              View All Services
-            </Link>
-          </div>
-        </Container>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-16 bg-primary text-primary-content">
-        <Container>
-          <div className="stats stats-vertical lg:stats-horizontal shadow w-full">
-            <div className="stat place-items-center">
-              <div className="stat-title text-primary-content/70">Happy Customers</div>
-              <div className="stat-value">500+</div>
-              <div className="stat-desc text-primary-content/60">Since 2020</div>
-            </div>
-            <div className="stat place-items-center">
-              <div className="stat-title text-primary-content/70">Projects Completed</div>
-              <div className="stat-value">1,200+</div>
-              <div className="stat-desc text-primary-content/60">↗︎ 40% this year</div>
-            </div>
-            <div className="stat place-items-center">
-              <div className="stat-title text-primary-content/70">Years Experience</div>
-              <div className="stat-value">15+</div>
-              <div className="stat-desc text-primary-content/60">Industry veterans</div>
-            </div>
-            <div className="stat place-items-center">
-              <div className="stat-title text-primary-content/70">Satisfaction Rate</div>
-              <div className="stat-value">98%</div>
-              <div className="stat-desc text-primary-content/60">Based on reviews</div>
-            </div>
-          </div>
-        </Container>
-      </section>
+      {/* Image Gallery Section */}
+      <ImageGallery
+        title="From the window to your plate"
+        subtitle="Fresh ingredients, authentic recipes, made with love every single day."
+        images={galleryData}
+      />
 
       {/* Testimonials Section */}
-      {testimonials.length > 0 ? (
-        <section className="py-20 bg-base-200">
-          <Container>
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold mb-4">What Our Clients Say</h2>
-              <p className="text-lg opacity-70 max-w-2xl mx-auto">
-                Don&apos;t just take our word for it - hear from our satisfied customers.
-              </p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {testimonials.map((testimonial) => (
-                <TestimonialCard
-                  key={testimonial.id}
-                  quote={testimonial.quote}
-                  author={testimonial.author}
-                  role={testimonial.role}
-                  company={testimonial.company}
-                  rating={testimonial.rating}
-                />
-              ))}
-            </div>
-          </Container>
-        </section>
-      ) : (
-        <section className="py-20 bg-base-200">
-          <Container>
-            <div className="text-center mb-12">
-              <h2 className="text-4xl font-bold mb-4">What Our Clients Say</h2>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <TestimonialCard
-                quote="Exceptional service! They exceeded our expectations and delivered on time. Highly recommend to anyone looking for quality work."
-                author="John Smith"
-                role="CEO"
-                company="TechCorp"
-                rating={5}
-              />
-              <TestimonialCard
-                quote="Professional team that really understands our needs. The results speak for themselves - our business has grown significantly."
-                author="Sarah Johnson"
-                role="Marketing Director"
-                company="Growth Co"
-                rating={5}
-              />
-              <TestimonialCard
-                quote="Working with them was a pleasure. Great communication, fair pricing, and outstanding results. Will definitely work together again."
-                author="Mike Williams"
-                role="Founder"
-                company="StartupXYZ"
-                rating={5}
-              />
-            </div>
-          </Container>
-        </section>
-      )}
+      <TestimonialsStrip
+        title="What the regulars say"
+        testimonials={testimonialsData}
+      />
 
-      {/* Recent Blog Posts */}
-      {recentPosts.length > 0 && (
-        <section className="py-20 bg-base-100">
-          <Container>
-            <div className="flex items-center justify-between mb-12">
-              <div>
-                <h2 className="text-4xl font-bold mb-2">Latest News</h2>
-                <p className="text-lg opacity-70">Stay updated with our latest insights</p>
+      {/* Location Section */}
+      <section id="location" className="py-16 px-4 bg-base-100">
+        <div className="container mx-auto max-w-4xl text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Find Us</h2>
+          <p className="text-lg opacity-70 mb-8">
+            Come hungry, leave happy. We&apos;re parked and ready to serve!
+          </p>
+          
+          {/* Location card */}
+          <div className="card bg-base-200 shadow-xl max-w-md mx-auto">
+            <div className="card-body">
+              <div className="flex items-start gap-4">
+                <div className="text-3xl">📍</div>
+                <div className="text-left">
+                  <h3 className="font-bold text-lg">Taco Bella&apos;s</h3>
+                  <p className="opacity-70">3008 W Slaughter Ln</p>
+                  <p className="opacity-70">Austin, TX 78748</p>
+                </div>
               </div>
-              <Link href="/blog" className="btn btn-outline hidden md:inline-flex">
-                View All Posts
-              </Link>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              {recentPosts.map((post) => (
-                <BlogCard key={post.id} post={post} />
-              ))}
-            </div>
-            <div className="text-center mt-8 md:hidden">
-              <Link href="/blog" className="btn btn-outline">
-                View All Posts
-              </Link>
-            </div>
-          </Container>
-        </section>
-      )}
-
-      {/* CTA Section */}
-      <section className="py-20 bg-base-300">
-        <Container>
-          <div className="text-center max-w-3xl mx-auto">
-            <h2 className="text-4xl font-bold mb-6">Ready to Get Started?</h2>
-            <p className="text-lg opacity-70 mb-8">
-              Contact us today for a free consultation. Let&apos;s discuss how we can help your business grow.
-            </p>
-            <div className="flex gap-4 justify-center flex-wrap">
-              <Link href="/contact" className="btn btn-primary btn-lg">
-                Contact Us
-              </Link>
-              <Link href="tel:+15551234567" className="btn btn-outline btn-lg">
-                Call Now
-              </Link>
+              
+              <div className="divider"></div>
+              
+              <div className="flex items-start gap-4">
+                <div className="text-3xl">🕐</div>
+                <div className="text-left">
+                  <h3 className="font-bold text-lg">Hours</h3>
+                  <p className="opacity-70">Mon–Sat: 7am – 2pm</p>
+                  <p className="opacity-70">Sunday: Closed</p>
+                </div>
+              </div>
+              
+              <div className="divider"></div>
+              
+              <div className="flex items-start gap-4">
+                <div className="text-3xl">📞</div>
+                <div className="text-left">
+                  <h3 className="font-bold text-lg">Contact</h3>
+                  <p className="opacity-70">(512) 740-2289</p>
+                </div>
+              </div>
             </div>
           </div>
-        </Container>
+
+          {/* Google Maps Embed */}
+          <div className="mt-8 rounded-xl overflow-hidden max-w-2xl mx-auto">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3448.8!2d-97.8747!3d30.1697!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzDCsDEwJzExLjAiTiA5N8KwNTInMjkuMCJX!5e0!3m2!1sen!2sus!4v1234567890"
+              width="100%"
+              height="300"
+              style={{ border: 0 }}
+              allowFullScreen
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="rounded-xl"
+            ></iframe>
+          </div>
+
+          {/* CTA */}
+          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=3008+W+Slaughter+Ln+Austin+TX+78748"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-primary"
+            >
+              Get Directions
+            </a>
+            <a href="tel:+15127402289" className="btn btn-outline">
+              Call to Order
+            </a>
+          </div>
+        </div>
       </section>
-    </>
+
+      {/* Menu Section */}
+      <section id="menu" className="py-16 px-4 bg-base-200">
+        <div className="container mx-auto max-w-4xl text-center">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Menu</h2>
+          <p className="text-lg opacity-70 mb-8">
+            Simple. Delicious. Made fresh every day.
+          </p>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+            {/* Breakfast Tacos */}
+            <div className="card bg-base-100 shadow-xl">
+              <div className="card-body">
+                <h3 className="card-title text-primary">
+                  🌅 Breakfast Tacos
+                </h3>
+                <ul className="space-y-3 mt-4">
+                  {(breakfastItems.length > 0 ? breakfastItems : defaultMenuItems.breakfast).map((item, index) => (
+                    <li key={index} className="flex justify-between">
+                      <span>{'name' in item ? item.name : item.name}</span>
+                      <span className="font-bold">${typeof item.price === 'number' ? item.price.toFixed(2) : item.price}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* Street Tacos */}
+            <div className="card bg-base-100 shadow-xl">
+              <div className="card-body">
+                <h3 className="card-title text-primary">
+                  🌮 Street Tacos
+                </h3>
+                <ul className="space-y-3 mt-4">
+                  {(lunchItems.length > 0 ? lunchItems : defaultMenuItems.lunch).map((item, index) => (
+                    <li key={index} className="flex justify-between">
+                      <span>{'name' in item ? item.name : item.name}</span>
+                      <span className="font-bold">${typeof item.price === 'number' ? item.price.toFixed(2) : item.price}</span>
+                    </li>
+              ))}
+                </ul>
+            </div>
+            </div>
+          </div>
+
+          <p className="mt-8 text-sm opacity-60">
+            All tacos served on fresh corn or flour tortillas. Breakfast served all day!
+          </p>
+        </div>
+      </section>
+    </main>
   );
 }
