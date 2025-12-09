@@ -187,6 +187,12 @@ export const foodTruck = {
     },
   ],
 
+  // Menu CTA
+  menuCta: {
+    label: "View Full Menu",
+    href: "https://www.instagram.com/tacobellas_atx",
+  },
+
   // Vibe imagery
   vibeImages: [
     { src: "/images/food-1.webp", alt: "Tortas" },
