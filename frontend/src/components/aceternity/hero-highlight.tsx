@@ -53,7 +53,7 @@ export function HeroHighlight({
                 times: [0, 0.25, 0.5, 0.75, 1]
               }
             }}
-            className="mb-0 mt-[40px] flex justify-center"
+            className="mb-0 mt-[40px] md:mt-[90px] flex justify-center"
           >
             <Image
               src="/images/logo_black.png"
@@ -77,7 +77,7 @@ export function HeroHighlight({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="mx-auto mb-12 max-w-3xl text-xl text-gray-600 sm:text-2xl leading-relaxed font-bold"
+            className="mx-auto mb-12 max-w-3xl text-[0.8em] sm:text-[0.8em] md:text-xl lg:text-2xl text-gray-600 leading-relaxed font-bold"
           >
             {(() => {
               const updatedSubtitle = subtitle.replace(/love/gi, (match) => (

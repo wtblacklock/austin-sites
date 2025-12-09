@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -19,8 +19,20 @@ export function AnimatedTestimonials({
   testimonials: Testimonial[];
   className?: string;
 }) {
-  const [visibleCount, setVisibleCount] = useState(9);
-  const INITIAL_COUNT = 9;
+  // On mobile/tablet: show 4, on desktop: show 9
+  const [isMobile, setIsMobile] = useState(false);
+  const [visibleCount, setVisibleCount] = useState(9); // Default to desktop count
+
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 1024;
+      setIsMobile(mobile);
+      setVisibleCount(mobile ? 4 : 9);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const visibleTestimonials = testimonials.slice(0, visibleCount);
   const hasMore = testimonials.length > visibleCount;

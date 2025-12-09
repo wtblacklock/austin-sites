@@ -107,7 +107,7 @@ export default function HomePage() {
         <div className="relative mx-auto max-w-[1400px] mb-20 px-6">
           <div className="text-center">
             <h2 className="mb-4 text-5xl font-bold text-gray-900 sm:text-6xl">
-              Fresh From The <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">Grill</span>
+              Feel The <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">Vibe</span>
             </h2>
             <p className="text-lg text-gray-600">See what&apos;s cooking at {foodTruck.name}</p>
           </div>

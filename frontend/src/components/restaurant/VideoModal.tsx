@@ -56,7 +56,7 @@ export function VideoModal({ isOpen, onClose, videoUrl }: VideoModalProps) {
             className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative w-full max-w-2xl bg-white rounded-lg shadow-2xl overflow-hidden">
+            <div className="relative w-full max-w-md mx-auto my-auto bg-white rounded-lg shadow-2xl overflow-hidden">
               {/* Close Button */}
               <button
                 onClick={onClose}
@@ -78,11 +78,11 @@ export function VideoModal({ isOpen, onClose, videoUrl }: VideoModalProps) {
                 </svg>
               </button>
 
-              {/* Video Container */}
-              <div className="relative w-full aspect-[9/16] bg-black">
+              {/* Video Container - Centered */}
+              <div className="relative w-full aspect-[9/16] bg-black mt-[25px]">
                 <iframe
                   src={videoUrl}
-                  className="w-full h-full"
+                  className="w-full h-full absolute inset-0"
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
