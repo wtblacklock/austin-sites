@@ -28,12 +28,9 @@ export function MenuFeatured() {
           <div>
             <div className="columns-2 gap-4 space-y-4">
               {foodImages.map((img, index) => (
-                <Link 
+                <div 
                   key={index}
-                  href={instagramUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block break-inside-avoid overflow-hidden rounded-lg group"
+                  className="block break-inside-avoid overflow-hidden rounded-lg"
                 >
                   <Image
                     src={img.src}
@@ -41,10 +38,10 @@ export function MenuFeatured() {
                     width={300}
                     height={img.height === "tall" ? 400 : img.height === "medium" ? 300 : 200}
                     quality={100}
-                    className="w-full h-auto object-cover hover:scale-105 transition-transform duration-500"
+                    className="w-full h-auto object-cover"
                     style={{ imageRendering: 'crisp-edges', filter: 'contrast(1.1) saturate(1.1)' }}
                   />
-                </Link>
+                </div>
               ))}
             </div>
 

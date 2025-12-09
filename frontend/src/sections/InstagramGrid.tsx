@@ -29,26 +29,17 @@ export function InstagramGrid() {
         {/* Instagram Grid */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-4">
           {instagramFeed.map((post, index) => (
-            <Link
+            <div
               key={index}
-              href={post.href || instagramUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="aspect-square relative overflow-hidden rounded-lg shadow-lg group"
+              className="aspect-square relative overflow-hidden rounded-lg shadow-lg"
             >
               <Image
                 src={post.src}
                 alt={post.alt}
                 fill
-                className="object-cover transition-transform duration-300 group-hover:scale-110"
+                className="object-cover"
               />
-              {/* Hover overlay only */}
-              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-300 flex items-center justify-center">
-                <span className="text-white text-lg font-semibold opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  View on Instagram
-                </span>
-              </div>
-            </Link>
+            </div>
           ))}
         </div>
       </div>
