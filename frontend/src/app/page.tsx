@@ -3,6 +3,8 @@ import { GallerySlider } from '@/components/aceternity/gallery-slider';
 import { ImageGallery } from '@/components/aceternity/image-gallery';
 import { FloatingNav } from '@/components/aceternity/floating-navbar';
 import MenuAccordion from '@/components/ui/MenuAccordion';
+import VideoPopup from '@/components/ui/VideoPopup';
+import { FloatingTikTokWidget } from '@/components/restaurant/FloatingTikTokWidget';
 import { foodTruck } from '@/config/foodTruck.config';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -32,6 +34,13 @@ export default function HomePage() {
 
   return (
     <main className="bg-white">
+      {/* Video Popup - Shows on page load */}
+      <VideoPopup 
+        videoUrl="https://www.tiktok.com/embed/v2/7447574236547419438"
+        delay={1500}
+        showOnlyOnce={true}
+      />
+
       {/* Floating Navigation */}
               <FloatingNav 
                 navItems={navItems}
@@ -228,6 +237,12 @@ export default function HomePage() {
           </p>
         </div>
       </footer>
+
+      {/* Floating TikTok Widget */}
+      <FloatingTikTokWidget
+        videoUrl="https://www.tiktok.com/embed/v2/7447574236547419438"
+        thumbnailSrc="/images/tikitok.png"
+      />
     </main>
   );
 }

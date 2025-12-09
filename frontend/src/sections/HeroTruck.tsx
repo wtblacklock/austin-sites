@@ -1,15 +1,13 @@
 "use client";
 
-import { useState } from "react";
 import { foodTruck } from "@/config/foodTruck.config";
 import Image from "next/image";
 import Link from "next/link";
-import { VideoModal } from "@/components/restaurant/VideoModal";
+import { FloatingTikTokWidget } from "@/components/restaurant/FloatingTikTokWidget";
 import { JaggedSeparator } from "@/components/JaggedSeparator";
 
 export function HeroTruck() {
   const { hero } = foodTruck;
-  const [videoModalOpen, setVideoModalOpen] = useState(false);
 
   return (
     <>
@@ -51,34 +49,6 @@ export function HeroTruck() {
               </Link>
             </div>
 
-            {/* TikTok Video Thumbnail - Below buttons on mobile/tablet, floating right on desktop */}
-            <div className="mt-6 lg:mt-0 lg:absolute lg:top-auto lg:bottom-20 lg:right-10 lg:z-20 lg:block">
-              <button
-                onClick={() => setVideoModalOpen(true)}
-                className="block hover:scale-105 transition-transform duration-300 rounded-lg overflow-hidden shadow-[0_10px_30px_rgba(0,0,0,0.7)] lg:mx-0"
-              >
-                <div className="relative w-32 md:w-44 lg:w-56 aspect-[9/16]">
-                  <Image
-                    src="/images/tikitok.png"
-                    alt="Watch TikTok Video"
-                    fill
-                    className="object-cover scale-[1.024]"
-                  />
-                  {/* Play Button Overlay */}
-                  <div className="absolute inset-0 flex items-center justify-center transition-colors">
-                    <div className="w-12 h-12 md:w-16 md:h-16 bg-white/90 rounded-full flex items-center justify-center">
-                      <svg 
-                        className="w-6 h-6 md:w-8 md:h-8 text-[#FF000D] ml-1" 
-                        fill="currentColor" 
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M8 5v14l11-7z"/>
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-              </button>
-            </div>
           </div>
         </div>
         
@@ -88,11 +58,10 @@ export function HeroTruck() {
         </div>
       </section>
 
-      {/* Video Modal */}
-      <VideoModal
-        isOpen={videoModalOpen}
-        onClose={() => setVideoModalOpen(false)}
+      {/* Floating TikTok Widget */}
+      <FloatingTikTokWidget
         videoUrl="https://www.tiktok.com/embed/v2/7447574236547419438"
+        thumbnailSrc="/images/tikitok.png"
       />
     </>
   );

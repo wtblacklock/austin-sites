@@ -77,11 +77,25 @@ export function HeroHighlight({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="mx-auto mb-12 max-w-3xl text-xl text-gray-600 sm:text-2xl leading-relaxed"
+            className="mx-auto mb-12 max-w-3xl text-xl text-gray-600 sm:text-2xl leading-relaxed font-bold"
           >
-            {subtitle.replace(/love/gi, (match) => (
-              `${match}, Since 2008`
-            ))}
+            {(() => {
+              const updatedSubtitle = subtitle.replace(/love/gi, (match) => (
+                `${match}, Since 2008`
+              ));
+              const yelpMatch = updatedSubtitle.match(/(4\.6 stars on Yelp with 73\+ reviews\.)/);
+              if (yelpMatch) {
+                const parts = updatedSubtitle.split(yelpMatch[0]);
+                return (
+                  <>
+                    {parts[0]}
+                    <span className="text-orange-500">{yelpMatch[0]}</span>
+                    {parts[1]}
+                  </>
+                );
+              }
+              return updatedSubtitle;
+            })()}
           </motion.p>
 
           {/* CTA Buttons */}
