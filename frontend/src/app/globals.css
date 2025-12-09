@@ -1,59 +1,116 @@
 @import "tailwindcss";
-@plugin "daisyui";
 
-/* Vibrant red theme */
-@plugin "daisyui" {
-  themes: false;
-}
-
+/* Restaurant dark theme with bold orange */
 :root {
-  --font-oswald: "Oswald", sans-serif;
+  /* Bold orange palette */
+  --color-orange: #FF6B00;
+  --color-orange-bright: #FF8533;
+  --color-orange-dark: #CC5500;
   
-  /* Bright red #FF000D */
-  --color-red: #FF000D;
-  --color-red-dark: #cc000a;
-  --color-red-darker: #990008;
+  /* Dark background */
+  --color-dark: #0a0a0a;
+  --color-dark-card: #1a1a1a;
+  --color-dark-border: #2a2a2a;
   
-  /* Cream/white for contrast */
-  --color-cream: #faf8f5;
+  /* Light text */
   --color-white: #ffffff;
+  --color-gray: #a0a0a0;
   
-  /* Dark for contrast elements */
-  --color-dark: #1a1a1a;
+  /* Yellow accent */
+  --color-yellow: #FFDD00;
+
+  --radius: 0.5rem;
+  --background: #0a0a0a;
+  --foreground: #ffffff;
+  --card: #1a1a1a;
+  --card-foreground: #ffffff;
+  --popover: #1a1a1a;
+  --popover-foreground: #ffffff;
+  --primary: #FF6B00;
+  --primary-foreground: #ffffff;
+  --secondary: #2a2a2a;
+  --secondary-foreground: #ffffff;
+  --muted: #2a2a2a;
+  --muted-foreground: #a0a0a0;
+  --accent: #FF6B00;
+  --accent-foreground: #ffffff;
+  --destructive: #ef4444;
+  --border: #2a2a2a;
+  --input: #2a2a2a;
+  --ring: #FF6B00;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-body {
-  font-family: var(--font-oswald);
-  background-color: #FF000D;
-  color: #ffffff;
+/* Hide scrollbar for horizontal scroll */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
 
-/* Oswald chunky heading style with 3% letter-spacing */
+/* Marquee animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 20s linear infinite;
+}
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Font utility classes */
 .font-chunky {
-  font-family: var(--font-oswald);
-  font-weight: 700;
-  letter-spacing: 0.03em;
+  font-family: 'Ultra', serif;
   text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
-/* Utility classes */
-.text-body {
-  @apply text-lg leading-relaxed;
-}
-
-.text-body-lg {
-  @apply text-xl leading-relaxed;
-}
-
-.section-padding {
-  @apply py-20 px-6 md:py-28 lg:py-36;
-}
-
-/* Container with consistent max-width for grid alignment */
-.container-grid {
-  @apply container mx-auto max-w-6xl px-6;
+.font-button {
+  font-family: var(--font-button), 'Archivo', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
 }
