@@ -1,3 +1,5 @@
+import React from "react";
+
 interface DiamondSeparatorProps {
   color?: string;
   bgColor?: string;
@@ -16,7 +18,7 @@ export function DiamondSeparator({
   // Create simple diamond pattern
   const createDiamondPattern = () => {
     const numDiamonds = 30; // Enough to cover width
-    let elements: JSX.Element[] = [];
+    let elements: React.ReactElement[] = [];
     
     for (let i = 0; i < numDiamonds; i++) {
       const centerX = i * diamondWidth + diamondWidth / 2;
