@@ -36,7 +36,7 @@ export function TestimonialsStrip() {
             style={{ paddingBottom: '72px' }}
           >
             {/* Large quote mark */}
-            <div className="text-white/30 text-8xl font-serif leading-none mb-4">"</div>
+            <div className="text-[#FFDD00] text-8xl font-serif leading-none mb-4">"</div>
             
             {/* Quote */}
             <p className="text-xl md:text-2xl text-white leading-relaxed mb-6">
