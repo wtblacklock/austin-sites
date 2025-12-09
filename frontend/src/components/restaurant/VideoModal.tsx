@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface VideoModalProps {
@@ -10,6 +10,18 @@ interface VideoModalProps {
 }
 
 export function VideoModal({ isOpen, onClose, videoUrl }: VideoModalProps) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile/tablet
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   // Prevent body scroll when modal is open
   useEffect(() => {
     if (isOpen) {
@@ -84,7 +96,9 @@ export function VideoModal({ isOpen, onClose, videoUrl }: VideoModalProps) {
                   src={videoUrl}
                   className="w-full h-full absolute inset-0"
                   frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allow={isMobile 
+                    ? "accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    : "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"}
                   allowFullScreen
                   title="TikTok Video"
                 />

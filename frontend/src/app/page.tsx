@@ -64,14 +64,14 @@ export default function HomePage() {
         secondaryCtaHref={hero.secondaryCtaHref}
       />
 
+      {/* Image Gallery - Full Width (below hero) */}
+      <div className="w-full mb-20">
+        <ImageGallery images={galleryData} />
+      </div>
+
       {/* Menu Section */}
       <section id="menu" className="relative py-32 px-6 bg-white">
         <div className="relative mx-auto w-full">
-          {/* Image Gallery */}
-          <div className="mb-20 px-6">
-            <ImageGallery images={galleryData} />
-          </div>
-          
           <div className="relative mx-auto max-w-[1400px]">
 
           <div className="mb-20 text-left">
