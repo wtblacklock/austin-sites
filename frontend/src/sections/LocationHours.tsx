@@ -31,7 +31,7 @@ export function LocationHours() {
   return (
     <section id="location" className="pt-24 pb-20 px-6 md:pb-28 lg:pb-36 bg-[#faf8f5]">
       <div className="container-grid">
-        {/* Header - Left aligned, no separator */}
+        {/* Header - Left aligned */}
         <div className="mb-12">
           <h2 className="font-chunky text-4xl sm:text-5xl md:text-6xl text-[#FF000D]">
             Find Us
@@ -62,16 +62,7 @@ export function LocationHours() {
             </div>
 
             <p className="text-lg text-[#1a1a1a]/60 italic">
-              Usually parked off Slaughter Lane in South Austin.{" "}
-              <Link
-                href={instagramUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-[#FF000D] underline hover:text-[#cc000a]"
-              >
-                Check Instagram
-              </Link>{" "}
-              stories for pop ups and updated hours.
+              Usually parked off Slaughter Lane in South Austin near the Shell station.
             </p>
 
             {/* Desktop only button */}

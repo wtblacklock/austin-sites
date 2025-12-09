@@ -5,7 +5,7 @@ export function TestimonialsStrip() {
   const { testimonials } = foodTruck;
 
   return (
-    <section className="py-20 bg-[#faf8f5] overflow-hidden">
+    <section id="testimonials" className="section-padding bg-[#faf8f5] overflow-hidden">
       <div className="container-grid">
         {/* Header - Left aligned */}
         <div className="mb-12">
@@ -28,7 +28,7 @@ export function TestimonialsStrip() {
       </div>
 
       {/* Horizontal scrolling testimonials */}
-      <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-6 px-6 md:px-[calc((100vw-72rem)/2+1.5rem)] scrollbar-hide">
+      <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory pb-6 px-6 md:px-[calc((100vw-72rem)/2+1.5rem)] testimonial-scrollbar">
         {testimonials.map((testimonial, index) => (
           <div 
             key={index} 
@@ -51,6 +51,31 @@ export function TestimonialsStrip() {
             )}
           </div>
         ))}
+      </div>
+
+      {/* Links */}
+      <div className="container-grid mt-10">
+        <div className="text-center">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Link 
+              href="https://www.yelp.com/biz/taco-bellas-austin" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-[#1a1a1a]/60 hover:text-[#FF000D] transition-colors underline"
+            >
+              View More Reviews on Yelp
+            </Link>
+            <span className="text-[#1a1a1a]/30 hidden sm:inline">•</span>
+            <Link 
+              href="https://www.facebook.com/tacobellas/reviews" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-[#1a1a1a]/60 hover:text-[#FF000D] transition-colors underline"
+            >
+              View More Reviews on Facebook
+            </Link>
+          </div>
+        </div>
       </div>
     </section>
   );

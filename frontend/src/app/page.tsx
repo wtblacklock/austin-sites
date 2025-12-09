@@ -1,5 +1,8 @@
 import { NavMinimal } from "@/components/NavMinimal";
 import { FixedBottomCta } from "@/components/FixedBottomCta";
+import { JaggedSeparator } from "@/components/JaggedSeparator";
+import { DiamondSeparator } from "@/components/DiamondSeparator";
+import { ZigzagSeparator } from "@/components/ZigzagSeparator";
 import {
   HeroTruck,
   MenuHighlight,
@@ -18,9 +21,12 @@ export default function HomePage() {
         <HeroTruck />
         <MenuHighlight />
         <VibeStrip />
-        <TestimonialsStrip />
         <LocationHours />
+        <ZigzagSeparator color="#FF000D" bgColor="#faf8f5" scrolling={true} />
+        <TestimonialsStrip />
         <InstagramGrid />
+        <div className="h-[75px] bg-[#faf8f5]"></div>
+        <ZigzagSeparator color="#FF000D" bgColor="#faf8f5" scrolling={true} />
         <BottomCtaBand />
       </main>
       <FixedBottomCta />
