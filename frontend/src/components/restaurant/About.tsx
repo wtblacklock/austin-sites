@@ -30,8 +30,8 @@ export function About() {
           {/* Image */}
           <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
             <Image
-              src="https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=800&h=600&fit=crop"
-              alt="Delicious tacos"
+              src="/images/menu.webp"
+              alt="Menu"
               fill
               className="object-cover"
             />

@@ -95,39 +95,104 @@ export const foodTruck = {
     { src: "https://images.unsplash.com/photo-1613514785940-daed07799d9b?w=400&h=400&fit=crop", alt: "Morning line", href: "https://www.instagram.com/tacobellas_atx" },
   ],
 
-  // Real Yelp testimonials from https://www.yelp.com/biz/taco-bellas-austin
+  // Facebook and Yelp reviews
   testimonials: [
+    // Facebook reviews from https://www.facebook.com/tacobellas/reviews
+    { 
+      quote: "I had their chorizo breakfast tacos and my gooooooodness!!! Best tacos I've ever had!", 
+      author: "Megan Johnson Gibbs",
+      date: "Nov 28, 2024"
+    },
+    { 
+      quote: "If you haven't been here, go!", 
+      author: "Jenny Lynn",
+      date: "Feb 24, 2024"
+    },
+    { 
+      quote: "Our family loves Taco Bella's! Their breakfast taco's are fantastic! I love the 'Bella' (egg, potato, cheese and the best meaty bacon)! Michelle is the friendliest business owner. We are happy to support local business!", 
+      author: "Julie Quinn Newton",
+      date: "Sept 11, 2023"
+    },
+    { 
+      quote: "Best tacos, I always crave them!!!! Child-friendly • Fast delivery • Cheap eats • Best brunch • Great food • Comfort food", 
+      author: "Luana Ferreira",
+      date: "Mar 29, 2021"
+    },
+    { 
+      quote: "The best breakfast tacos you'll ever have. Stop by and get you some. You cannot beat them anywhere else. Great food", 
+      author: "Rene Martinez Jr",
+      date: "May 2, 2020"
+    },
+    { 
+      quote: "Stopped by today for a couple of tacos on a friends recommendation, the chicharron taco is the bomb… Thanks Pete and Ann Marie for the secret spot in South Austin! very good tacos.", 
+      author: "Ruben Rodriguez",
+      date: "Apr 6, 2018"
+    },
+    { 
+      quote: "I miss the Torta Perra. ⭐⭐ When I go back up to Austin I know where I'm going. Taco Bellas!!", 
+      author: "Joel J Chavarin",
+      date: "Feb 3, 2018"
+    },
+    { 
+      quote: "WOW….I JUST HAD 2 CHORIZO AND EGG TACOS SO DELICIOUS THOSE TACOS WERE VERY TASTY. I RECOMMEND FOR ANYONE WHO HAS NOT TRY OR CHECK OUT THIS FOOD TRUCK….I LOVE LOVE THEM TACOS", 
+      author: "Lionel Aguilar",
+      date: "Jan 27, 2018"
+    },
+    { 
+      quote: "My favorite taco spot in the neighborhood. Great tacos and lots of Love!", 
+      author: "Wes Lane",
+      date: "Jan 23, 2018"
+    },
+    { 
+      quote: "Been coming here for years now. Always great food and great conversation. 🙂", 
+      author: "Jake Morrison",
+      date: "Nov 23, 2016"
+    },
+    { 
+      quote: "These tacos slamm!! Best taco trailer in south Austin… 5 stars", 
+      author: "Ashton Figueroa",
+      date: "Jul 9, 2015"
+    },
+    { 
+      quote: "I LOVE, LOVE, LOVE Tacos Bella's! BEST tacos in South Austin, my go-to-place!", 
+      author: "Nicole Draves Perez",
+      date: "Jan 21, 2015"
+    },
+    // Yelp reviews from https://www.yelp.com/biz/taco-bellas-austin
+    { 
+      quote: "I think I found my new favorite taco truck! The owner is so friendly and helped with recommendations. I had the pastor and steak tacos and they were delicious!", 
+      author: "Linnea F.",
+      date: "Yelp"
+    },
+    { 
+      quote: "I love Taco Bella's. The owner behind the counter was so sweet, but most importantly the tacos were some of the best I have ever had. Fresh, hot, and delicious.", 
+      author: "Kim Y.",
+      date: "Yelp"
+    },
+    { 
+      quote: "Really great experience with wonderful food. Didn't realize they had been at this location for years already since I'm always on the hunt for a taco shop.", 
+      author: "Robert A.",
+      date: "Yelp"
+    },
+    { 
+      quote: "She's been in business for 16 years now believe it or not. The owner is very nice and eager to please. I loved the breakfast tacos here!", 
+      author: "Chris M.",
+      date: "Yelp"
+    },
+    { 
+      quote: "I always say Austin doesn't have any tacos as good as San Antonio. I stand corrected!!! These are by far THE BEST I've ever had.", 
+      author: "Candice N.",
+      date: "Yelp"
+    },
     { 
       quote: "Best tacos in South Austin. Period.", 
-      author: "Mike T." 
+      author: "Mike T.",
+      date: "Yelp"
     },
     { 
-      quote: "I think I found my new favorite taco truck! The owner is so friendly and helped with recommendations. I had the pastor and steak tacos and they were delicious! The salsa bar is incredible too — make sure you try the green sauce. We drove 30 minutes and it was absolutely worth it.", 
-      author: "Linnea F." 
-    },
-    { 
-      quote: "Fresh, hot, and delicious. Every single time.", 
-      author: "Kim Y." 
-    },
-    { 
-      quote: "Really great experience with wonderful food. Didn't realize they had been at this location for years already since I'm always on the hunt for a taco shop. The breakfast tacos are the real deal — perfectly seasoned eggs, crispy bacon, and the tortillas taste homemade. Bella herself took our order and remembered us the second time we came back. This is what Austin food is all about.", 
-      author: "Robert A." 
-    },
-    { 
-      quote: "16 years in business for a reason!", 
-      author: "Chris M." 
-    },
-    { 
-      quote: "These are by far THE BEST tacos I've ever had.", 
-      author: "Candice N." 
-    },
-    { 
-      quote: "My go-to spot every Saturday morning. The migas plate is unreal — crispy chips, perfectly scrambled eggs, and that house salsa? Chef's kiss. Bella always has a smile and remembers your order. It's not just a taco trailer, it's a South Austin institution. If you haven't been, you're missing out on one of the best kept secrets in town.", 
-      author: "Sarah L." 
-    },
-    { 
-      quote: "Worth the drive from downtown.", 
-      author: "James R." 
+      quote: "My go-to spot every Saturday morning. The migas plate is unreal — crispy chips, perfectly scrambled eggs, and that house salsa? Chef's kiss. Bella always has a smile and remembers your order.", 
+      author: "Sarah L.",
+      date: "Yelp"
     },
   ],
 

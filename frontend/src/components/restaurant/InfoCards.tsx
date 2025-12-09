@@ -45,8 +45,8 @@ export function InfoCards() {
           {/* Right side - Photo */}
           <div className="relative aspect-[3/4] rounded-lg overflow-hidden">
             <img
-              src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?w=800&h=1000&fit=crop"
-              alt="Line cook in food truck"
+              src="/images/bella.webp"
+              alt="Bella"
               className="w-full h-full object-cover"
             />
           </div>

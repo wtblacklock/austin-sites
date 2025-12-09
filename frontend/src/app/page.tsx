@@ -15,7 +15,9 @@ export default function HomePage() {
     <main className="min-h-screen bg-[#0a0a0a]">
       <Header />
       <Hero />
-      <Marquee text="Always Fresh. Always Bella." />
+      <div className="relative">
+        <Marquee text="Taco About Some Good Food" />
+      </div>
       <About />
       <Marquee text="Tacos • Breakfast • Street Food" className="bg-[#1a1a1a]" />
       <MenuFeatured />
