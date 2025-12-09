@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { ImageModal } from "@/components/ui/ImageModal";
 
 interface GalleryImage {
   src: string;
@@ -19,6 +20,7 @@ export function GallerySlider({ images, className }: GallerySliderProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<{ src: string; alt: string } | null>(null);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -86,7 +88,8 @@ export function GallerySlider({ images, className }: GallerySliderProps) {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -50 }}
                 transition={{ duration: 0.3, delay: idx * 0.05 }}
-                className="relative flex-shrink-0 w-[calc(50%-0.75rem)] lg:w-[calc(25%-0.75rem)] aspect-[4/3] overflow-hidden rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-shadow"
+                className="relative flex-shrink-0 w-[calc(50%-0.75rem)] lg:w-[calc(25%-0.75rem)] aspect-[4/3] overflow-hidden rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-shadow cursor-pointer"
+                onClick={() => setSelectedImage({ src: imageData.src, alt: imageData.alt })}
               >
                 <Image
                   src={imageData.src}
@@ -111,7 +114,8 @@ export function GallerySlider({ images, className }: GallerySliderProps) {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: 50 }}
                 transition={{ duration: 0.3, delay: idx * 0.05 }}
-                className="relative flex-shrink-0 w-[calc(50%-0.75rem)] lg:w-[calc(25%-0.75rem)] aspect-[4/3] overflow-hidden rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-shadow"
+                className="relative flex-shrink-0 w-[calc(50%-0.75rem)] lg:w-[calc(25%-0.75rem)] aspect-[4/3] overflow-hidden rounded-2xl border border-gray-200 shadow-sm hover:shadow-lg transition-shadow cursor-pointer"
+                onClick={() => setSelectedImage({ src: imageData.src, alt: imageData.alt })}
               >
                 <Image
                   src={imageData.src}
@@ -146,6 +150,16 @@ export function GallerySlider({ images, className }: GallerySliderProps) {
       <div className="mt-4 text-center text-sm text-gray-500">
         {currentIndex + 1} / {maxSlides}
       </div>
+
+      {/* Image Modal */}
+      {selectedImage && (
+        <ImageModal
+          isOpen={!!selectedImage}
+          onClose={() => setSelectedImage(null)}
+          imageSrc={selectedImage.src}
+          imageAlt={selectedImage.alt}
+        />
+      )}
     </div>
   );
 }
