@@ -38,7 +38,7 @@ export function Spotlight({ children, className, fill = "white" }: SpotlightProp
           background: useMotionTemplate`
             radial-gradient(
               650px circle at ${mouseX}px ${mouseY}px,
-              rgba(34, 197, 94, 0.15),
+              rgba(255, 107, 0, 0.1),
               transparent 80%
             )
           `,
@@ -68,7 +68,7 @@ export function SpotlightCard({
   return (
     <div
       className={cn(
-        "group relative rounded-xl border border-white/10 bg-zinc-900/50 p-8",
+        "group relative rounded-3xl border border-gray-200 bg-white p-8 shadow-sm transition-all hover:shadow-lg",
         className
       )}
       onMouseMove={handleMouseMove}
@@ -79,7 +79,7 @@ export function SpotlightCard({
           background: useMotionTemplate`
             radial-gradient(
               400px circle at ${mouseX}px ${mouseY}px,
-              rgba(34, 197, 94, 0.1),
+              rgba(255, 107, 0, 0.08),
               transparent 80%
             )
           `,

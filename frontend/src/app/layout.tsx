@@ -1,10 +1,23 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Changa_One, Nunito, Work_Sans } from "next/font/google";
 import "./globals.css";
 import { getSiteSettings } from "@/lib/strapi";
 
-const inter = Inter({
+const changaOne = Changa_One({
+  weight: "400",
   subsets: ["latin"],
+  variable: "--font-headline",
+});
+
+const nunito = Nunito({
+  subsets: ["latin"],
+  variable: "--font-body",
+});
+
+const workSans = Work_Sans({
+  weight: "800",
+  subsets: ["latin"],
+  variable: "--font-button",
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -22,8 +35,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <body className={`${inter.className} min-h-screen bg-black text-white antialiased`}>
+    <html lang="en">
+      <body className={`${nunito.variable} ${changaOne.variable} ${workSans.variable} font-body min-h-screen bg-white text-gray-900 antialiased`}>
         {children}
       </body>
     </html>

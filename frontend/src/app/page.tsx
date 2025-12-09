@@ -1,59 +1,11 @@
-import { HeroHighlight, BentoImageCard, AnimatedTestimonials, SpotlightCard } from '@/components/aceternity';
+import { HeroHighlight, AnimatedTestimonials, SpotlightCard } from '@/components/aceternity';
+import { GallerySlider } from '@/components/aceternity/gallery-slider';
+import { ImageGallery } from '@/components/aceternity/image-gallery';
 import { FloatingNav } from '@/components/aceternity/floating-navbar';
-import { getHero, getGalleryImages, getTestimonials, getMenuItems, getStrapiMediaUrl } from '@/lib/strapi';
+import MenuAccordion from '@/components/ui/MenuAccordion';
+import { foodTruck } from '@/config/foodTruck.config';
 import Link from 'next/link';
-
-// Default/fallback data when Strapi is not available
-const defaultHero = {
-  title: "Taco Bella's",
-  subtitle: "Serving South Austin since 2008 – over 16 years at the same location! Fresh, affordable breakfast tacos and street tacos made with love. 4.6 stars on Yelp with 73+ reviews.",
-  ctaLabel: "Find us today",
-  ctaHref: "#location",
-};
-
-const defaultGalleryImages = [
-  { src: "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&h=450&fit=crop", alt: "The Bella Taco – egg, bacon, potato & cheese" },
-  { src: "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=600&h=450&fit=crop", alt: "Beef fajita tacos on flour tortilla" },
-  { src: "https://images.unsplash.com/photo-1599974579688-8dbdd335c77f?w=600&h=450&fit=crop", alt: "Al pastor tacos – crispy and delicious" },
-  { src: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600&h=450&fit=crop", alt: "Migas taco with crispy chips" },
-  { src: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092?w=600&h=450&fit=crop", alt: "Fresh red and green salsa" },
-  { src: "https://images.unsplash.com/photo-1613514785940-daed07799d9b?w=600&h=450&fit=crop", alt: "Carnitas on a fresh corn tortilla" },
-];
-
-const defaultTestimonials = [
-  {
-    quote: "I think I found my new favorite taco truck! The owner is so friendly and helped with recommendations. I had the pastor and steak tacos and they were delicious!",
-    author: "Linnea F.",
-    role: "Yelp Review",
-  },
-  {
-    quote: "I love Taco Bella's. The owner behind the counter was so sweet, but most importantly the tacos were some of the best I have ever had. Fresh, hot, and delicious.",
-    author: "Kim Y.",
-    role: "Yelp Review",
-  },
-  {
-    quote: "Really great experience with wonderful food. Didn't realize they had been at this location for years already since I'm always on the hunt for a taco shop.",
-    author: "Robert A.",
-    role: "Yelp Review",
-  },
-];
-
-const defaultMenuItems = {
-  breakfast: [
-    { name: "Bella Taco (Egg, Bacon, Potato, Cheese)", price: 4 },
-    { name: "Bacon & Egg", price: 3.5 },
-    { name: "Migas", price: 4 },
-    { name: "Chorizo & Egg", price: 4 },
-    { name: "Bean & Cheese", price: 3 },
-  ],
-  lunch: [
-    { name: "Beef Fajita", price: 4.5 },
-    { name: "Al Pastor", price: 4 },
-    { name: "Carnitas", price: 4 },
-    { name: "Steak Taco", price: 4.5 },
-    { name: "Barbacoa", price: 4.5 },
-  ],
-};
+import Image from 'next/image';
 
 const navItems = [
   { name: "Menu", link: "#menu" },
@@ -62,151 +14,108 @@ const navItems = [
   { name: "Location", link: "#location" },
 ];
 
-export default async function HomePage() {
-  // Fetch data from Strapi
-  const [hero, galleryImages, testimonials, menuItems] = await Promise.all([
-    getHero(),
-    getGalleryImages(),
-    getTestimonials(),
-    getMenuItems(),
-  ]);
+export default function HomePage() {
+  const { hero, menuHighlights, vibeImages, testimonials, instagramFeed, primaryLocation, hours, instagramUrl, phone } = foodTruck;
 
-  // Process hero data
-  const heroData = {
-    title: hero?.title || defaultHero.title,
-    subtitle: hero?.subtitle || defaultHero.subtitle,
-    ctaLabel: hero?.ctaLabel || defaultHero.ctaLabel,
-    ctaHref: hero?.ctaHref || defaultHero.ctaHref,
-  };
+  // Process testimonials for AnimatedTestimonials component
+  const testimonialsData = testimonials.map(t => ({
+    quote: t.quote,
+    author: t.author,
+    role: t.date || "Review",
+  }));
 
-  // Process gallery images
-  const galleryData = galleryImages.length > 0
-    ? galleryImages.map(img => ({
-        src: getStrapiMediaUrl(img.image.url),
-        alt: img.alt,
-      }))
-    : defaultGalleryImages;
-
-  // Process testimonials
-  const testimonialsData = testimonials.length > 0
-    ? testimonials.map(t => ({
-        quote: t.quote,
-        author: t.author,
-        role: "Yelp Review",
-        avatar: t.avatar?.url ? getStrapiMediaUrl(t.avatar.url) : undefined,
-      }))
-    : defaultTestimonials;
-
-  // Process menu items - map to consistent format
-  const breakfastItems = menuItems
-    .filter(item => item.category === 'breakfast')
-    .map(item => ({ name: item.name, price: item.price }));
-  const lunchItems = menuItems
-    .filter(item => item.category === 'lunch')
-    .map(item => ({ name: item.name, price: item.price }));
+  // Process gallery images from vibeImages
+  const galleryData = vibeImages.map(img => ({
+    src: img.src,
+    alt: img.alt,
+  }));
 
   return (
-    <main className="bg-black">
+    <main className="bg-white">
       {/* Floating Navigation */}
-      <FloatingNav 
-        navItems={navItems}
-        logo={
-          <Link href="/" className="text-xl font-bold text-white">
-            🌮 Taco Bella&apos;s
-          </Link>
-        }
-      />
+              <FloatingNav 
+                navItems={navItems}
+                logo={
+                  <Link href="/" className="text-xl font-bold text-gray-900">
+                    {foodTruck.name}
+                  </Link>
+                }
+                instagramUrl={instagramUrl}
+                facebookUrl="https://www.facebook.com/tacobellas"
+                phone={phone}
+              />
 
       {/* Hero Section */}
       <HeroHighlight
-        title={heroData.title}
-        subtitle={heroData.subtitle}
-        ctaLabel={heroData.ctaLabel}
-        ctaHref={heroData.ctaHref}
-        secondaryCtaLabel="View Menu"
-        secondaryCtaHref="#menu"
+        title={hero.title}
+        subtitle={hero.subtitle}
+        ctaLabel={hero.primaryCtaLabel}
+        ctaHref={hero.primaryCtaHref}
+        secondaryCtaLabel={hero.secondaryCtaLabel}
+        secondaryCtaHref={hero.secondaryCtaHref}
       />
 
       {/* Menu Section */}
-      <section id="menu" className="relative py-24 px-6">
-        <div className="absolute inset-0 bg-gradient-to-b from-black via-zinc-950 to-black" />
-        <div className="relative mx-auto max-w-6xl">
-          <div className="mb-16 text-center">
-            <h2 className="mb-4 text-4xl font-bold text-white sm:text-5xl">
-              Our <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Menu</span>
+      <section id="menu" className="relative py-32 px-6 bg-white">
+        <div className="relative mx-auto w-full">
+          {/* Image Gallery */}
+          <div className="mb-20 px-6">
+            <ImageGallery images={galleryData} />
+          </div>
+          
+          <div className="relative mx-auto max-w-[1400px]">
+
+          <div className="mb-20 text-left">
+            <h2 className="mb-4 text-5xl font-bold text-gray-900 sm:text-6xl">
+              Our <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">Menu</span>
             </h2>
-            <p className="text-zinc-400">Fresh tacos made with love. Breakfast served all day!</p>
+            <p className="text-lg text-gray-600">Fresh tacos made with love. Breakfast served all day!</p>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-2">
-            {/* Breakfast Tacos */}
-            <SpotlightCard className="p-8">
-              <div className="mb-6 flex items-center gap-3">
-                <span className="text-4xl">🌅</span>
-                <h3 className="text-2xl font-bold text-white">Breakfast Tacos</h3>
-              </div>
-              <ul className="space-y-4">
-                {(breakfastItems.length > 0 ? breakfastItems : defaultMenuItems.breakfast).map((item, index) => (
-                  <li key={index} className="flex items-center justify-between border-b border-white/10 pb-3">
-                    <span className="text-zinc-300">{item.name}</span>
-                    <span className="font-bold text-green-400">${item.price.toFixed(2)}</span>
-                  </li>
-                ))}
-              </ul>
-            </SpotlightCard>
+          <div className="mb-12">
+            <MenuAccordion categories={menuHighlights} />
+          </div>
 
-            {/* Street Tacos */}
-            <SpotlightCard className="p-8">
-              <div className="mb-6 flex items-center gap-3">
-                <span className="text-4xl">🌮</span>
-                <h3 className="text-2xl font-bold text-white">Street Tacos</h3>
-              </div>
-              <ul className="space-y-4">
-                {(lunchItems.length > 0 ? lunchItems : defaultMenuItems.lunch).map((item, index) => (
-                  <li key={index} className="flex items-center justify-between border-b border-white/10 pb-3">
-                    <span className="text-zinc-300">{item.name}</span>
-                    <span className="font-bold text-green-400">${item.price.toFixed(2)}</span>
-                  </li>
-                ))}
-              </ul>
-            </SpotlightCard>
+          <div className="text-center">
+            <a
+              href={foodTruck.instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 px-8 py-4 text-base font-semibold text-white transition-all hover:scale-105 hover:shadow-lg"
+            >
+              View Full Menu
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </a>
+          </div>
           </div>
         </div>
       </section>
 
       {/* Gallery Section */}
-      <section id="gallery" className="relative py-24 px-6">
-        <div className="absolute inset-0 bg-zinc-950" />
-        <div className="relative mx-auto max-w-6xl">
-          <div className="mb-16 text-center">
-            <h2 className="mb-4 text-4xl font-bold text-white sm:text-5xl">
-              Fresh From The <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Grill</span>
+      <section id="gallery" className="relative py-32 bg-gray-50">
+        <div className="relative mx-auto max-w-[1400px] mb-20 px-6">
+          <div className="text-center">
+            <h2 className="mb-4 text-5xl font-bold text-gray-900 sm:text-6xl">
+              Fresh From The <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">Grill</span>
             </h2>
-            <p className="text-zinc-400">See what&apos;s cooking at Taco Bella&apos;s</p>
+            <p className="text-lg text-gray-600">See what&apos;s cooking at {foodTruck.name}</p>
           </div>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {galleryData.map((image, index) => (
-              <BentoImageCard
-                key={index}
-                src={image.src}
-                alt={image.alt}
-                className={index === 0 ? "sm:col-span-2 lg:col-span-1" : ""}
-              />
-            ))}
-          </div>
+        </div>
+        <div className="w-full">
+          <GallerySlider images={galleryData} />
         </div>
       </section>
 
       {/* Testimonials Section */}
-      <section id="reviews" className="relative py-24 px-6">
-        <div className="absolute inset-0 bg-gradient-to-b from-zinc-950 via-black to-zinc-950" />
-        <div className="relative mx-auto max-w-6xl">
-          <div className="mb-16 text-center">
-            <h2 className="mb-4 text-4xl font-bold text-white sm:text-5xl">
-              What People <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Say</span>
+      <section id="reviews" className="relative py-32 px-6 bg-white">
+        <div className="relative mx-auto max-w-[1400px]">
+          <div className="mb-20 text-center">
+            <h2 className="mb-4 text-5xl font-bold text-gray-900 sm:text-6xl">
+              What People <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">Say</span>
             </h2>
-            <p className="text-zinc-400">4.6 stars on Yelp • 73+ Reviews</p>
+            <p className="text-lg text-gray-600">4.6 stars on Yelp • 73+ Reviews</p>
           </div>
 
           <AnimatedTestimonials testimonials={testimonialsData} />
@@ -214,76 +123,108 @@ export default async function HomePage() {
       </section>
 
       {/* Location Section */}
-      <section id="location" className="relative py-24 px-6">
-        <div className="absolute inset-0 bg-zinc-950" />
-        <div className="relative mx-auto max-w-4xl">
-          <div className="mb-16 text-center">
-            <h2 className="mb-4 text-4xl font-bold text-white sm:text-5xl">
-              Find <span className="bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">Us</span>
+      <section id="location" className="relative py-32 px-6 bg-gray-50">
+        <div className="relative mx-auto max-w-[1400px]">
+          <div className="mb-20 text-left">
+            <h2 className="mb-4 text-5xl font-bold text-gray-900 sm:text-6xl">
+              Find <span className="bg-gradient-to-r from-orange-500 to-orange-600 bg-clip-text text-transparent">Us</span>
             </h2>
-            <p className="text-zinc-400">Come visit us in South Austin!</p>
+            <p className="text-lg text-gray-600">Come visit us in South Austin!</p>
           </div>
 
-          <div className="grid gap-8 md:grid-cols-3">
+          <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
             {/* Address */}
-            <SpotlightCard className="p-6 text-center">
-              <div className="mb-4 text-4xl">📍</div>
-              <h3 className="mb-2 text-lg font-bold text-white">Address</h3>
-              <p className="text-zinc-400">3008 W Slaughter Ln</p>
-              <p className="text-zinc-400">Austin, TX 78748</p>
+            <div className="text-center md:text-left">
+              <h3 className="mb-4 text-2xl font-bold text-gray-900">Address</h3>
+              <p className="text-lg text-gray-700 mb-3">{primaryLocation.address}</p>
+              {primaryLocation.notes && (
+                <p className="text-gray-600 mb-6">{primaryLocation.notes}</p>
+              )}
               <a
-                href="https://maps.google.com/?q=3008+W+Slaughter+Ln+Austin+TX+78748"
+                href={primaryLocation.mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-block text-sm font-medium text-green-400 hover:text-green-300"
+                className="inline-block text-base font-medium text-orange-500 hover:text-orange-600 transition-colors"
               >
                 Get Directions →
               </a>
-            </SpotlightCard>
+            </div>
 
             {/* Hours */}
-            <SpotlightCard className="p-6 text-center">
-              <div className="mb-4 text-4xl">🕐</div>
-              <h3 className="mb-2 text-lg font-bold text-white">Hours</h3>
-              <p className="text-zinc-400">Mon – Sat: 7am – 2pm</p>
-              <p className="text-zinc-400">Sunday: Closed</p>
-              <p className="mt-4 text-sm text-green-400">Breakfast served all day!</p>
-            </SpotlightCard>
+            <div className="text-center md:text-left">
+              <h3 className="mb-4 text-2xl font-bold text-gray-900">Hours</h3>
+              <div className="space-y-2 mb-6">
+                {hours.map((hour, idx) => (
+                  <p key={idx} className="text-lg text-gray-700">
+                    <span className="font-semibold">{hour.label}:</span> {hour.value}
+                  </p>
+                ))}
+              </div>
+              <p className="text-base text-orange-500 font-medium">Breakfast served all day!</p>
+            </div>
 
             {/* Phone */}
-            <SpotlightCard className="p-6 text-center">
-              <div className="mb-4 text-4xl">📞</div>
-              <h3 className="mb-2 text-lg font-bold text-white">Phone</h3>
-              <p className="text-zinc-400">(512) 740-2289</p>
+            <div className="text-center md:text-left">
+              <h3 className="mb-4 text-2xl font-bold text-gray-900">Phone</h3>
+              <p className="text-lg text-gray-700 mb-6">{foodTruck.phone}</p>
               <a
-                href="tel:+15127402289"
-                className="mt-4 inline-block rounded-full bg-gradient-to-r from-green-500 to-emerald-600 px-6 py-2 text-sm font-semibold text-white transition-transform hover:scale-105"
+                href={`tel:${foodTruck.phone.replace(/\D/g, '')}`}
+                className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-3 text-base font-semibold text-white transition-all hover:scale-105 hover:shadow-lg"
               >
-                Call Now
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                Order Ahead
               </a>
-            </SpotlightCard>
+            </div>
+
+            {/* Social Media */}
+            <div className="text-center md:text-left">
+              <h3 className="mb-4 text-2xl font-bold text-gray-900">Follow Us</h3>
+              <div className="space-y-4">
+                <a
+                  href={instagramUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-lg text-gray-700 hover:text-orange-500 transition-colors"
+                >
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM12 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zM12 16c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zM18.406 6.155c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                  </svg>
+                  <span>Instagram</span>
+                </a>
+                <a
+                  href="https://www.facebook.com/tacobellas"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 text-lg text-gray-700 hover:text-orange-500 transition-colors"
+                >
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                  </svg>
+                  <span>Facebook</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
+
       {/* Footer */}
-      <footer className="border-t border-white/10 bg-black py-12 px-6">
-        <div className="mx-auto max-w-6xl text-center">
-          <p className="mb-4 text-2xl font-bold text-white">🌮 Taco Bella&apos;s</p>
-          <p className="mb-6 text-zinc-500">Serving South Austin since 2008</p>
-          <div className="flex justify-center gap-6 text-zinc-400">
-            <a href="https://www.yelp.com/biz/taco-bellas-austin" target="_blank" rel="noopener noreferrer" className="hover:text-green-400 transition-colors">
-              Yelp
+      <footer className="border-t border-gray-200 bg-white py-16 px-6">
+        <div className="mx-auto max-w-[1400px] text-center">
+          <p className="mb-4 text-3xl font-bold text-gray-900">🌮 {foodTruck.name}</p>
+          <p className="mb-8 text-lg text-gray-600">{foodTruck.tagline}</p>
+          <div className="flex flex-wrap justify-center gap-6 text-gray-500">
+            <a href={`tel:${foodTruck.phone.replace(/\D/g, '')}`} className="hover:text-orange-500 transition-colors">
+              {foodTruck.phone}
             </a>
             <span>•</span>
-            <a href="tel:+15127402289" className="hover:text-green-400 transition-colors">
-              (512) 740-2289
-            </a>
-            <span>•</span>
-            <span>3008 W Slaughter Ln, Austin TX</span>
+            <span className="text-gray-500">{primaryLocation.address}</span>
           </div>
-          <p className="mt-8 text-sm text-zinc-600">
-            © {new Date().getFullYear()} Taco Bella&apos;s. All rights reserved.
+          <p className="mt-12 text-sm text-gray-400">
+            © {new Date().getFullYear()} {foodTruck.name}. All rights reserved.
           </p>
         </div>
       </footer>

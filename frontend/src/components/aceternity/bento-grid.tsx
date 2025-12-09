@@ -77,7 +77,7 @@ export function BentoImageCard({
       transition={{ duration: 0.5 }}
       viewport={{ once: true }}
       className={cn(
-        "group relative overflow-hidden rounded-xl border border-white/10",
+        "group relative overflow-hidden rounded-3xl border border-gray-200 shadow-sm hover:shadow-xl transition-all",
         className
       )}
     >
@@ -86,9 +86,9 @@ export function BentoImageCard({
           src={src}
           alt={alt}
           fill
-          className="object-cover transition-transform duration-500 group-hover:scale-110"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        <div className="absolute inset-0 bg-gradient-to-t from-gray-900/40 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
         <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full transition-transform duration-300 group-hover:translate-y-0">
           <p className="text-sm font-medium text-white">{alt}</p>
         </div>

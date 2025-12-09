@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import Image from "next/image";
 
 interface HeroHighlightProps {
   title: string;
@@ -24,39 +25,50 @@ export function HeroHighlight({
   className,
 }: HeroHighlightProps) {
   return (
-    <div className={cn("relative min-h-screen overflow-hidden", className)}>
-      {/* Gradient background */}
-      <div className="absolute inset-0 bg-black">
-        <div className="absolute inset-0 bg-gradient-to-b from-green-500/10 via-transparent to-transparent" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(34,197,94,0.3),rgba(0,0,0,0))]" />
-      </div>
-
-      {/* Grid pattern overlay */}
-      <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:40px_40px]" />
-
+    <div className={cn("relative min-h-screen overflow-hidden bg-white", className)}>
       {/* Content */}
       <div className="relative z-10 mx-auto flex min-h-screen max-w-5xl flex-col items-center justify-center px-6 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
+          className="w-full"
         >
-          {/* Badge */}
+          {/* Logo - Centered above title */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="mb-8 inline-flex items-center rounded-full border border-green-500/20 bg-green-500/10 px-4 py-2"
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ 
+              opacity: 1, 
+              x: 0,
+              rotate: [0, 3, -3, 2, -2, 0]
+            }}
+            transition={{ 
+              opacity: { duration: 0.8, delay: 0.1, ease: "easeOut" },
+              x: { duration: 0.8, delay: 0.1, ease: "easeOut" },
+              rotate: { 
+                duration: 8,
+                delay: 1,
+                repeat: Infinity,
+                ease: "easeInOut",
+                times: [0, 0.25, 0.5, 0.75, 1]
+              }
+            }}
+            className="mb-0 mt-[40px] flex justify-center"
           >
-            <span className="mr-2 h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-            <span className="text-sm text-green-400">Serving Austin Since 2008</span>
+            <Image
+              src="/images/logo_black.png"
+              alt="Taco Bella's Logo"
+              width={160}
+              height={64}
+              className="h-auto w-auto max-w-[160px]"
+              priority
+            />
           </motion.div>
 
-          {/* Title */}
-          <h1 className="mb-6 text-5xl font-bold tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl">
-            <span className="block">{title.split(" ")[0]}</span>
-            <span className="block bg-gradient-to-r from-green-400 via-emerald-400 to-teal-400 bg-clip-text text-transparent">
-              {title.split(" ").slice(1).join(" ")}
+          {/* Title - Large, bold, playful */}
+          <h1 className="mb-6 text-5xl font-bold text-gray-900 sm:text-6xl md:text-7xl lg:text-8xl leading-[1.1]" style={{ letterSpacing: '0.125rem' }}>
+            <span className="block bg-gradient-to-r from-orange-500 via-orange-600 to-yellow-500 bg-clip-text text-transparent">
+              {title}
             </span>
           </h1>
 
@@ -65,9 +77,11 @@ export function HeroHighlight({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="mx-auto mb-10 max-w-2xl text-lg text-zinc-400 sm:text-xl"
+            className="mx-auto mb-12 max-w-3xl text-xl text-gray-600 sm:text-2xl leading-relaxed"
           >
-            {subtitle}
+            {subtitle.replace(/love/gi, (match) => (
+              `${match}, Since 2008`
+            ))}
           </motion.p>
 
           {/* CTA Buttons */}
@@ -75,46 +89,27 @@ export function HeroHighlight({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col items-center gap-4 sm:flex-row"
+            className="flex flex-col items-center justify-center gap-4 sm:flex-row"
           >
             <Link
               href={ctaHref}
-              className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-green-500 to-emerald-600 px-8 py-4 font-semibold text-white transition-transform hover:scale-105"
+              className="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-gradient-to-r from-orange-500 to-orange-600 px-10 py-5 text-lg font-semibold text-white transition-all hover:scale-105 hover:shadow-xl"
             >
               <span className="relative z-10">{ctaLabel}</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-green-500 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+              <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-orange-700 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
             </Link>
 
             {secondaryCtaLabel && secondaryCtaHref && (
               <Link
                 href={secondaryCtaHref}
-                className="inline-flex items-center gap-2 rounded-full border border-white/20 px-8 py-4 font-semibold text-white transition-colors hover:border-white/40 hover:bg-white/5"
+                className="inline-flex items-center gap-2 rounded-full border-2 border-gray-300 px-10 py-5 text-lg font-semibold text-gray-700 transition-all hover:border-orange-500 hover:text-orange-500 hover:bg-orange-50"
               >
                 {secondaryCtaLabel}
-                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                 </svg>
               </Link>
             )}
-          </motion.div>
-        </motion.div>
-
-        {/* Scroll indicator */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 1 }}
-          className="absolute bottom-10"
-        >
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ repeat: Infinity, duration: 2 }}
-            className="flex flex-col items-center gap-2 text-zinc-500"
-          >
-            <span className="text-xs uppercase tracking-widest">Scroll</span>
-            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
           </motion.div>
         </motion.div>
       </div>
