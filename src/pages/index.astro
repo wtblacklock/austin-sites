@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Header } from '../components/Header';
+import { Hero } from '../components/Hero';
+import { ProjectGrid } from '../components/ProjectGrid';
+import { Statement } from '../components/Statement';
+import { History } from '../components/History';
+import { Services } from '../components/Services';
+import { Contact } from '../components/Contact';
+import { Footer } from '../components/Footer';
+---
+
+<Layout>
+  <div class="min-h-screen bg-studio-white text-studio-black font-sans selection:bg-black selection:text-white">
+    <Header client:load />
+    <main>
+      <Hero client:load />
+      <ProjectGrid client:load />
+      <Statement client:load />
+      <History client:load />
+      <Services client:load />
+      <Contact client:load />
+    </main>
+    <Footer client:load />
+  </div>
+</Layout>
+
