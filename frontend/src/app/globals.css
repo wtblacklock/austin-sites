@@ -1,43 +1,45 @@
 @import "tailwindcss";
+@import "flowbite/dist/flowbite.css";
 
-/* Restaurant dark theme with bold orange */
+/* Jones BBQ inspired color palette - Red and Cream */
 :root {
-  /* Bold orange palette */
-  --color-orange: #FF6B00;
-  --color-orange-bright: #FF8533;
-  --color-orange-dark: #CC5500;
+  /* Red palette (Jones BBQ red) */
+  --color-red: #db4439;
+  --color-red-bright: #f05a4f;
+  --color-red-dark: #b8352b;
   
-  /* Dark background */
-  --color-dark: #0a0a0a;
-  --color-dark-card: #1a1a1a;
-  --color-dark-border: #2a2a2a;
+  /* Cream/Beige backgrounds */
+  --color-cream: #F1E7DA;
+  --color-cream-light: #F5EBDF;
+  --color-cream-dark: #E8D9C8;
   
-  /* Light text */
+  /* Dark text */
+  --color-dark: #1a1a1a;
+  --color-dark-light: #2a2a2a;
+  --color-gray: #666666;
+  
+  /* White */
   --color-white: #ffffff;
-  --color-gray: #a0a0a0;
-  
-  /* Yellow accent */
-  --color-yellow: #FFDD00;
 
   --radius: 0.5rem;
-  --background: #0a0a0a;
-  --foreground: #ffffff;
-  --card: #1a1a1a;
-  --card-foreground: #ffffff;
-  --popover: #1a1a1a;
-  --popover-foreground: #ffffff;
-  --primary: #FF6B00;
+  --background: #F1E7DA;
+  --foreground: #1a1a1a;
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
+  --popover: #ffffff;
+  --popover-foreground: #1a1a1a;
+  --primary: #db4439;
   --primary-foreground: #ffffff;
-  --secondary: #2a2a2a;
-  --secondary-foreground: #ffffff;
-  --muted: #2a2a2a;
-  --muted-foreground: #a0a0a0;
-  --accent: #FF6B00;
+  --secondary: #E8D9C8;
+  --secondary-foreground: #1a1a1a;
+  --muted: #E8D9C8;
+  --muted-foreground: #666666;
+  --accent: #db4439;
   --accent-foreground: #ffffff;
-  --destructive: #ef4444;
-  --border: #2a2a2a;
-  --input: #2a2a2a;
-  --ring: #FF6B00;
+  --destructive: #db4439;
+  --border: #DDCDBC;
+  --input: #ffffff;
+  --ring: #db4439;
 }
 
 html {
@@ -55,11 +57,11 @@ html {
 
 /* TikTok embed - remove white background */
 iframe[src*="tiktok.com"] {
-  background-color: #0a0a0a !important;
+  background-color: #F1E7DA !important;
 }
 
 iframe[src*="tiktok.com"] body {
-  background-color: #0a0a0a !important;
+  background-color: #F1E7DA !important;
 }
 
 /* Marquee animation */
@@ -74,6 +76,21 @@ iframe[src*="tiktok.com"] body {
 
 .animate-marquee {
   animation: marquee 20s linear infinite;
+}
+
+/* Scrolling bar animation */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+  display: flex;
 }
 
 @theme inline {
@@ -108,18 +125,349 @@ iframe[src*="tiktok.com"] body {
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Pointer cursor for all buttons and links */
+  button,
+  a,
+  [role="button"],
+  input[type="button"],
+  input[type="submit"] {
+    cursor: pointer;
+  }
 }
 
 /* Font utility classes */
 .font-chunky {
-  font-family: 'Ultra', serif;
+  font-family: var(--font-heading), 'Anton', sans-serif;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 1px;
+  font-weight: 400;
 }
 
-.font-button {
-  font-family: var(--font-button), 'Archivo', sans-serif;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
+/* Scroll animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scroll-fade-in {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scroll-fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered scroll animations */
+@keyframes staggerFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.stagger-item {
+  opacity: 0;
+  transform: translateY(30px) scale(0.95);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.stagger-item.stagger-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Scrolling bar initial hidden state */
+.scrolling-bar-item {
+  opacity: 0 !important;
+  color: transparent !important;
+  visibility: hidden !important;
+  transform: translateY(30px) scale(0.95) !important;
+}
+
+.scrolling-bar-item.visible {
+  opacity: 1 !important;
+  color: #1a1a1a !important;
+  visibility: visible !important;
+  transform: translateY(0) scale(1) !important;
+}
+
+/* Force hide scrolling bar text on initial load */
+section[data-scrolling-bar] span:not(.scrolling-bar-visible) {
+  display: none !important;
+  opacity: 0 !important;
+  color: transparent !important;
+  visibility: hidden !important;
+  font-size: 0 !important;
+  line-height: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+  text-indent: -9999px !important;
+}
+
+section[data-scrolling-bar] span.scrolling-bar-visible {
+  display: inline-block !important;
+  opacity: 1 !important;
+  color: #1a1a1a !important;
+  visibility: visible !important;
+  font-size: inherit !important;
+  line-height: inherit !important;
+  width: auto !important;
+  height: auto !important;
+  overflow: visible !important;
+  text-indent: 0 !important;
+}
+
+/* Animated Hearts Floating Up */
+@keyframes heart-float-1 {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.2;
+    transform: translateY(-30px) translateX(10px);
+  }
+  100% {
+    transform: translateY(-60px) translateX(20px);
+    opacity: 0;
+  }
+}
+
+@keyframes heart-float-2 {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.25;
+    transform: translateY(-35px) translateX(-8px);
+  }
+  100% {
+    transform: translateY(-70px) translateX(-15px);
+    opacity: 0;
+  }
+}
+
+@keyframes heart-float-3 {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.2;
+    transform: translateY(-28px) translateX(12px);
+  }
+  100% {
+    transform: translateY(-56px) translateX(25px);
+    opacity: 0;
+  }
+}
+
+@keyframes heart-float-4 {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.22;
+    transform: translateY(-32px) translateX(-10px);
+  }
+  100% {
+    transform: translateY(-64px) translateX(-20px);
+    opacity: 0;
+  }
+}
+
+@keyframes heart-float-5 {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.2;
+    transform: translateY(-30px) translateX(9px);
+  }
+  100% {
+    transform: translateY(-60px) translateX(18px);
+    opacity: 0;
+  }
+}
+
+@keyframes heart-float-6 {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.25;
+    transform: translateY(-33px) translateX(-11px);
+  }
+  100% {
+    transform: translateY(-66px) translateX(-22px);
+    opacity: 0;
+  }
+}
+
+.animate-heart-float-1 {
+  animation: heart-float-1 8s linear infinite;
+}
+
+.animate-heart-float-2 {
+  animation: heart-float-2 9s linear infinite;
+  animation-delay: 1s;
+}
+
+.animate-heart-float-3 {
+  animation: heart-float-3 10s linear infinite;
+  animation-delay: 2s;
+}
+
+.animate-heart-float-4 {
+  animation: heart-float-4 8.5s linear infinite;
+  animation-delay: 3s;
+}
+
+.animate-heart-float-5 {
+  animation: heart-float-5 9.5s linear infinite;
+  animation-delay: 4s;
+}
+
+.animate-heart-float-6 {
+  animation: heart-float-6 8.8s linear infinite;
+  animation-delay: 5s;
+}
+
+/* Animated Tacos Floating Up */
+@keyframes taco-float-1 {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.2;
+    transform: translateY(-50vh) translateX(20px) rotate(15deg);
+  }
+  100% {
+    transform: translateY(-100vh) translateX(20px) rotate(30deg);
+    opacity: 0;
+  }
+}
+
+@keyframes taco-float-2 {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.25;
+    transform: translateY(-50vh) translateX(-15px) rotate(-12deg);
+  }
+  100% {
+    transform: translateY(-100vh) translateX(-15px) rotate(-25deg);
+    opacity: 0;
+  }
+}
+
+@keyframes taco-float-3 {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.2;
+    transform: translateY(-50vh) translateX(25px) rotate(18deg);
+  }
+  100% {
+    transform: translateY(-100vh) translateX(25px) rotate(35deg);
+    opacity: 0;
+  }
+}
+
+@keyframes taco-float-4 {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.22;
+    transform: translateY(-50vh) translateX(-20px) rotate(-15deg);
+  }
+  100% {
+    transform: translateY(-100vh) translateX(-20px) rotate(-30deg);
+    opacity: 0;
+  }
+}
+
+@keyframes taco-float-5 {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.2;
+    transform: translateY(-50vh) translateX(18px) rotate(10deg);
+  }
+  100% {
+    transform: translateY(-100vh) translateX(18px) rotate(20deg);
+    opacity: 0;
+  }
+}
+
+@keyframes taco-float-6 {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.25;
+    transform: translateY(-50vh) translateX(-22px) rotate(-18deg);
+  }
+  100% {
+    transform: translateY(-100vh) translateX(-22px) rotate(-35deg);
+    opacity: 0;
+  }
+}
+
+.animate-taco-float-1 {
+  animation: taco-float-1 8s linear infinite;
+}
+
+.animate-taco-float-2 {
+  animation: taco-float-2 9s linear infinite;
+  animation-delay: 1s;
+}
+
+.animate-taco-float-3 {
+  animation: taco-float-3 10s linear infinite;
+  animation-delay: 2s;
+}
+
+.animate-taco-float-4 {
+  animation: taco-float-4 8.5s linear infinite;
+  animation-delay: 3s;
+}
+
+.animate-taco-float-5 {
+  animation: taco-float-5 9.5s linear infinite;
+  animation-delay: 4s;
+}
+
+.animate-taco-float-6 {
+  animation: taco-float-6 8.8s linear infinite;
+  animation-delay: 5s;
 }

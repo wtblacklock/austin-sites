@@ -63,7 +63,7 @@ export function MenuFeatured() {
             {/* Fan Favorites - Menu blurb and CTA */}
             <div className="mb-12">
               <h3 className="font-chunky text-2xl text-[#FF6B00] mb-4">
-                Fan Favorites
+                From the Trailer
               </h3>
               <p className="text-white/70 leading-relaxed mb-6">
                 From crispy bacon & egg breakfast tacos to tender pastor with fresh cilantro and onion — every bite is made to order. Don't miss the migas plate or our famous street taco trio.

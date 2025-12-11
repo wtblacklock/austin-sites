@@ -1,29 +1,28 @@
 import {
-  Header,
+  Navbar,
   Hero,
-  Marquee,
-  About,
-  MenuFeatured,
-  Testimonials,
-  InfoCards,
-  Contact,
+  ScrollingBar,
+  SauceIntro,
+  VisitSection,
+  QuoteStory,
+  InstagramScrollingBar,
+  ThingsToKnow,
+  Newsletter,
   Footer,
-} from "@/components/restaurant";
+} from "@/components/jones-style";
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen bg-[#0a0a0a]">
-      <Header />
+    <main className="min-h-screen bg-[#F1E7DA] w-full overflow-x-hidden">
+      <Navbar />
       <Hero />
-      <div className="relative">
-        <Marquee text="Taco About Some Good Food" />
-      </div>
-      <About />
-      <Marquee text="Tacos • Breakfast • Street Food" className="bg-[#1a1a1a]" />
-      <MenuFeatured />
-      <Testimonials />
-      <InfoCards />
-      <Contact />
+      <ScrollingBar />
+      <SauceIntro />
+      <VisitSection />
+      <QuoteStory />
+      <InstagramScrollingBar />
+      <ThingsToKnow />
+      <Newsletter />
       <Footer />
     </main>
   );
