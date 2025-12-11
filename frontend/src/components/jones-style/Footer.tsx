@@ -1,7 +1,8 @@
 "use client";
 
-import { Footer, FooterBrand, FooterTitle, FooterLinkGroup, FooterLink } from "flowbite-react";
+import { Footer, FooterTitle, FooterLinkGroup, FooterLink } from "flowbite-react";
 import Image from "next/image";
+import Link from "next/link";
 import { bbq } from "@/config/bbq.config";
 
 export function FooterComponent() {
@@ -11,7 +12,7 @@ export function FooterComponent() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo */}
           <div className="mb-8 md:mb-0">
-            <FooterBrand href="/">
+            <Link href="/" className="inline-block">
               <Image
                 src="/images/logo_black.png"
                 alt={bbq.name}
@@ -20,7 +21,7 @@ export function FooterComponent() {
                 className="h-[137px] w-auto"
                 style={{ filter: 'brightness(0) saturate(100%) invert(94%) sepia(8%) saturate(1000%) hue-rotate(330deg) brightness(95%) contrast(90%)' }}
               />
-            </FooterBrand>
+            </Link>
           </div>
 
           {/* Visit Us */}
