@@ -1,0 +1,87 @@
+{
+  "kind": "singleType",
+  "collectionName": "site_settings",
+  "info": {
+    "singularName": "site-setting",
+    "pluralName": "site-settings",
+    "displayName": "Site Settings",
+    "description": "Global site configuration for the business"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "siteName": {
+      "type": "string",
+      "required": true,
+      "default": "Business Name"
+    },
+    "siteTitle": {
+      "type": "string",
+      "required": true
+    },
+    "siteDescription": {
+      "type": "text"
+    },
+    "siteUrl": {
+      "type": "string"
+    },
+    "logo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "favicon": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "socialImage": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": ["images"]
+    },
+    "theme": {
+      "type": "enumeration",
+      "enum": ["light", "dark", "corporate", "business", "emerald", "forest", "luxury", "dracula", "autumn", "nord"],
+      "default": "corporate"
+    },
+    "primaryColor": {
+      "type": "string"
+    },
+    "footerText": {
+      "type": "text"
+    },
+    "copyrightText": {
+      "type": "string"
+    },
+    "contactEmail": {
+      "type": "email"
+    },
+    "contactPhone": {
+      "type": "string"
+    },
+    "address": {
+      "type": "text"
+    },
+    "socialTwitter": {
+      "type": "string"
+    },
+    "socialFacebook": {
+      "type": "string"
+    },
+    "socialInstagram": {
+      "type": "string"
+    },
+    "socialLinkedin": {
+      "type": "string"
+    },
+    "googleAnalyticsId": {
+      "type": "string"
+    }
+  }
+}
