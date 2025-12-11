@@ -11,6 +11,10 @@ export default defineConfig({
   integrations: [react()],
 
   vite: {
-    plugins: [tailwindcss()]
+    plugins: [
+      tailwindcss({
+        base: './src/styles/global.css'
+      })
+    ]
   }
 });
